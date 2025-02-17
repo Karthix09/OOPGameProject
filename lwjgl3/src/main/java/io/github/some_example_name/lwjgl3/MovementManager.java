@@ -39,5 +39,10 @@ public class MovementManager implements iMovable{
 	        System.out.println("Executing movement logic.");
 	    }
 
+	    public MovementManager() {
+	        this.speed = 0;
+	        this.isPlayer = false;
+	    }
+
 
 }

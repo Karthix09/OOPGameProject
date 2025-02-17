@@ -1,18 +1,16 @@
 package io.github.some_example_name.lwjgl3;
 
 import com.badlogic.gdx.ApplicationAdapter;
+import com.badlogic.gdx.Game;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.utils.ScreenUtils;
 
-public class GameMaster extends ApplicationAdapter{
-	
+public class GameMaster extends Game {
 	
 	//Drawing Sprites and shapes 
 	private SpriteBatch batch;
 	private ShapeRenderer shape;//To draw shapes 
-	
-	
 	
 	//Managers
 	private EntityManager entityManager;//Entity Management
@@ -21,26 +19,27 @@ public class GameMaster extends ApplicationAdapter{
 	private SceneManager sceneManager;//Scene Management
 	private IOManager ioManager;//Input/Output Management 
 	
-	
-
-	
 	//Entity Objects
 	MovableEntity objects; // objects/stones AI Controlled 
 	MovableEntity player; // Player
 	
-	
-	
-	
 	@Override
 	public void create() {
-		batch = new SpriteBatch();//To draw Sprites 
-		shape = new ShapeRenderer();
-		entityManager = new EntityManager();
-		
-		createEntityObjects();
-		
+	    batch = new SpriteBatch();
+	    shape = new ShapeRenderer();
+
+	    // Initialize entity manager
+	    entityManager = new EntityManager(); 
+
+	    // Ensure other managers are initialized
+	    collisionManager = new HandleCollision();
+	    movementManager = new MovementManager(30, true);
+	    sceneManager = new SceneManager(this);
+	    ioManager = new IOManager();
+
+	    createEntityObjects(); // Make sure entities are created
 	}
-	
+
 	//Initialize the entity Objects 
 	public void createEntityObjects() {
 		//Player Character

@@ -1,74 +1,90 @@
 package io.github.some_example_name.lwjgl3;
 
-public class UserMovement extends MovementManager{
+import com.badlogic.gdx.Gdx;
+
+public class UserMovement extends MovementManager {
 	
-	 private boolean isUser;
-	    private String movementtype;
+//    private boolean isUser;
+//    private String movementtype;
+    private float posX; // Store movement position
+    private float posY;
 
-	    public UserMovement(float speed, String MovementType) {
-	        super(speed);
-	        this.isUser = true;
-	        this.movementtype= MovementType;
-	    }
+    public UserMovement(String MovementType) {
+        super(30, true); // Example speed and player settings
+//        this.isUser = true;
+//        this.movementtype = MovementType;
+        this.posX = 0; // Initialize position (or set it dynamically)
+        this.posY = 0;
+    }
 
-	 // Entity Movement Methods
-	    public void moveleft() {
-	     setX((getX() - 500 * Gdx.graphics.getDeltaTime()));
-	    }
+    // Set position independently
+    public void setPosition(float x, float y) {
+        this.posX = x;
+        this.posY = y;
+    }
 
-	    public void moveright() {
-	     setX(getX() + 500* Gdx.graphics.getDeltaTime());
-	    }
+    public float getPosX() {
+        return this.posX;
+    }
 
-	    public void moveDown() {
-	     setY((getY() - getSpeed()* Gdx.graphics.getDeltaTime()));
-	    }
+    public float getPosY() {
+        return this.posY;
+    }
 
-	    public void moveUp() {
-	     setY((getY() + getSpeed() * Gdx.graphics.getDeltaTime()));
-	    }
-	    @Override
-	    public void updateMovement() {
-	        System.out.println("User is controlling movement.");
-	    }
+    // Entity Movement Methods (Now independent)
+    public void moveLeft() {
+        this.posX -= 500 * Gdx.graphics.getDeltaTime();
+    }
 
-	    // Overloaded methods to handle movement differently
-	    public void Usermove() {
-	        System.out.println("Moving based on previous input.");
-	    }
+    public void moveRight() {
+        this.posX += 500 * Gdx.graphics.getDeltaTime();
+    }
 
-	    public void Usermove(String movementtype) {
-	        System.out.println("Player is moving " + movementtype);
-	        
-	     // Overloaded move method that takes input as a string
-	        
-	        switch (movementtype.toLowerCase()) {
-	            case "left":
-	                moveleft();
-	                System.out.println("Moving left...");
-	                break;
-	            case "right":
-	                moveright();
-	                System.out.println("Moving right...");
-	                break;
-	            case "up":
-	                moveUp();
-	                System.out.println("Moving up...");
-	                break;
-	            case "down":
-	                moveDown();
-	                System.out.println("Moving down...");
-	                break;
-	            default:
-	                System.out.println("Invalid movement command: " + movementtype);
-	                break;
-	            }
-	        }
-	    }
+    public void moveDown() {
+        this.posY -= getSpeed() * Gdx.graphics.getDeltaTime();
+    }
 
-	    public void applyMovement() {
-	        System.out.println("Applying user movement.");
-	    }
+    public void moveUp() {
+        this.posY += getSpeed() * Gdx.graphics.getDeltaTime();
+    }
 
+    @Override
+    public void movement() {
+        System.out.println("User is controlling movement.");
+    }
 
+    // Overloaded methods to handle movement differently
+    public void userMove() {
+        System.out.println("Moving based on previous input.");
+    }
+
+    public void userMove(String movementType) {
+        System.out.println("Player is moving " + movementType);
+
+        switch (movementType.toLowerCase()) {
+            case "left":
+                moveLeft();
+                System.out.println("Moving left...");
+                break;
+            case "right":
+                moveRight();
+                System.out.println("Moving right...");
+                break;
+            case "up":
+                moveUp();
+                System.out.println("Moving up...");
+                break;
+            case "down":
+                moveDown();
+                System.out.println("Moving down...");
+                break;
+            default:
+                System.out.println("Invalid movement command: " + movementType);
+                break;
+        }
+    }
+
+    public void applyMovement() {
+        System.out.println("Applying user movement.");
+    }
 }

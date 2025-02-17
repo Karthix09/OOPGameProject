@@ -6,9 +6,9 @@ import com.badlogic.gdx.math.Rectangle;
 public class HandleCollision extends CollisionManager{
 	 @Override
 	    public boolean checkCollision(Entity e1, Entity e2) {
-	        Rectangle rect1 = new Rectangle(e1.x, e1.y, 1, 1);
-	        Rectangle rect2 = new Rectangle(e2.x, e2.y, 1, 1);
-	        return Intersector.overlaps(rect1, rect2);
+		 Rectangle rect1 = new Rectangle(e1.getPosX(), e1.getPosY(), 1, 1);
+		 Rectangle rect2 = new Rectangle(e2.getPosX(), e2.getPosY(), 1, 1);
+	     return Intersector.overlaps(rect1, rect2);
 	    }
 	    
 	    @Override

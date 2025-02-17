@@ -1,14 +1,13 @@
 package io.github.some_example_name.lwjgl3;
-
+import java.util.List;
 import java.util.ArrayList;
-
 import com.badlogic.gdx.math.Intersector;
 import com.badlogic.gdx.math.Rectangle;
-import com.badlogic.gdx.scenes.scene2d.ui.List;
 
 public abstract class CollisionManager {
 	
-private List<Entity> collidableObjects = new ArrayList<>();
+	protected List<Entity> collidableObjects = new ArrayList<>();
+
     
     public void addCollidable(Entity e) {
         collidableObjects.add(e);
