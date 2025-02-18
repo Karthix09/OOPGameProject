@@ -1,4 +1,4 @@
-package io.github.some_example_name.lwjgl3;
+package io.github.some_example_name.movement;
 
 import java.util.List;
 
@@ -22,16 +22,22 @@ public class MovementManager{
 //	        this.isPlayer = isPlayer;
 //	    }
 	    
+	 	// Updates all the movable entities 
 	    public void updateMovement(EntityManager entityManager) {
-	        List<Entity> entities = entityManager.getEntities();
+	        List<Entity> entities = entityManager.getEntities(); //call getEntities() to get all entities in array list  
 
 	        for (Entity entity : entities) {
-	            if (entity instanceof MovableEntity) {
+	            if (entity instanceof MovableEntity) { //check if entity is an instance of the MovableEntity class 
 	                MovableEntity movable = (MovableEntity) entity;
-	                movable.movement(); // Moves the entity based on velocity
+	                System.out.println(movable.getTexture());//check if texture is correct 
+	                movable.movement(); // call movement method in Movable Entity
 	            }
 	        }
 	    }
+	    
+	    //Update AI Movement 
+	    
+	    //Update Manual Movement
 
 
 	 public float getSpeed() {

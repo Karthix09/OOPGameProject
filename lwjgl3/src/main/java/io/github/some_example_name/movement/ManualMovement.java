@@ -1,11 +1,12 @@
-package io.github.some_example_name.lwjgl3;
+package io.github.some_example_name.movement;
 
 import com.badlogic.gdx.Gdx;
 
 import io.github.some_example_name.entities.Entity;
 import io.github.some_example_name.entities.MovableEntity;
+import io.github.some_example_name.interfaces.iMovable;
 
-public class UserMovement implements iMovable{
+public class ManualMovement implements iMovable{
 	
 	 private boolean isUser;
 	    private String movementtype;

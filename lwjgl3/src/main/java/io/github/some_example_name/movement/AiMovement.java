@@ -1,4 +1,4 @@
-package io.github.some_example_name.lwjgl3;
+package io.github.some_example_name.movement;
 
 public class AiMovement{
 //	private boolean isAI;

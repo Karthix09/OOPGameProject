@@ -7,8 +7,8 @@ import com.badlogic.gdx.utils.ScreenUtils;
 
 import io.github.some_example_name.lwjgl3.CollisionManager;
 import io.github.some_example_name.lwjgl3.IOManager;
-import io.github.some_example_name.lwjgl3.MovementManager;
 import io.github.some_example_name.lwjgl3.SceneManager;
+import io.github.some_example_name.movement.MovementManager;
 
 
 

@@ -8,7 +8,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 
-import io.github.some_example_name.lwjgl3.iMovable;
+import io.github.some_example_name.interfaces.iMovable;
 
 public class MovableEntity extends Entity implements iMovable{
 	
@@ -72,6 +72,8 @@ public class MovableEntity extends Entity implements iMovable{
 		
 		
 		//Movement Logic 
+		//Define Method for AI Movement 
+		//Define Method for Manual Movement 
 		@Override
 		public void movement() {
 			//Create a class for AI Movement and UserMovement to set gravity and define Usermovement 
@@ -110,5 +112,6 @@ public class MovableEntity extends Entity implements iMovable{
 	    	    this.setPosX(Math.max(0, Math.min(this.getPosX(), Gdx.graphics.getWidth() - this.getWidth())));
 	    	}
 		}
+
 
 }

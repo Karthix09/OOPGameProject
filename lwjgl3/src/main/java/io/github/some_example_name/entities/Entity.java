@@ -107,4 +107,5 @@ public abstract class Entity{
 			this.isCollidable= isCollidable;
 		}
 
+
 }
