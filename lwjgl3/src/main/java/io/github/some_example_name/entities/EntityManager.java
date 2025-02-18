@@ -1,4 +1,4 @@
-package io.github.some_example_name.lwjgl3;
+package io.github.some_example_name.entities;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -38,6 +38,12 @@ public class EntityManager {
             entity.draw(shapeRenderer, spriteBatch); //Passing in SpriteBatch(textureObjects) and ShapeRenderer(Shapes) to draw everything  
         }
     }
+    
+    // Method to return all entities
+    public List<Entity> getEntities() {
+        return entityList;
+    }
+
     
     public void disposeEntities() {
         for (Entity entity : entityList) {

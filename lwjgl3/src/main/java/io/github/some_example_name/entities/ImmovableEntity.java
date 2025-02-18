@@ -1,4 +1,4 @@
-package io.github.some_example_name.lwjgl3;
+package io.github.some_example_name.entities;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
@@ -18,8 +18,8 @@ public class ImmovableEntity extends Entity{
 		
 		
 	//  Constructor for IMMovable Texture Object  
-		ImmovableEntity(String filePath, float x, float y, boolean isCollidable, String colour, SpriteBatch batch){
-			super(x, y, isCollidable, colour);
+		ImmovableEntity(String filePath, float x, float y, boolean isCollidable, SpriteBatch batch){
+			super(x, y, isCollidable);
 			this.texture = new Texture(Gdx.files.internal(filePath));
 			this.batch = batch;
 		}

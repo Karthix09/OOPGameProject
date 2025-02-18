@@ -8,16 +8,16 @@ import com.badlogic.gdx.scenes.scene2d.ui.List;
 
 public abstract class CollisionManager {
 	
-private List<Entity> collidableObjects = new ArrayList<>();
+//private List<Entity> collidableObjects = new ArrayList<>();
     
-    public void addCollidable(Entity e) {
-        collidableObjects.add(e);
-    }
-    
-    public void removeCollidable(Entity e) {
-        collidableObjects.remove(e);
-    }
-    
-    public abstract boolean checkCollision(Entity e1, Entity e2);
-    public abstract void detectCollision(Entity e1, Entity e2);
+//    public void addCollidable(Entity e) {
+//        collidableObjects.add(e);
+//    }
+//    
+//    public void removeCollidable(Entity e) {
+//        collidableObjects.remove(e);
+//    }
+//    
+//    public abstract boolean checkCollision(Entity e1, Entity e2);
+//    public abstract void detectCollision(Entity e1, Entity e2);
 }
