@@ -1,13 +1,12 @@
 package io.github.some_example_name.lwjgl3;
 
+import com.badlogic.gdx.Game;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import java.util.HashMap;
 import java.util.Map;
 
-import com.badlogic.gdx.Game;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-
 public class SceneManager {
-	private Game game;
+    private Game game;
     private Map<String, Scene> scenes;
     private SceneTransition currentTransition;
     private float transitionTime = 0;
@@ -78,6 +77,5 @@ public class SceneManager {
         }
         scenes.clear();
     }
-
-	
 }
+

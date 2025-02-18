@@ -1,6 +1,11 @@
 package io.github.some_example_name.entities;
 
+<<<<<<< Updated upstream:lwjgl3/src/main/java/io/github/some_example_name/entities/GameMaster.java
 import com.badlogic.gdx.ApplicationAdapter;
+=======
+import com.badlogic.gdx.Game;
+import com.badlogic.gdx.Gdx;
+>>>>>>> Stashed changes:lwjgl3/src/main/java/io/github/some_example_name/lwjgl3/GameMaster.java
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.utils.ScreenUtils;
@@ -44,6 +49,7 @@ public class GameMaster extends ApplicationAdapter{
 	
 	@Override
 	public void create() {
+<<<<<<< Updated upstream:lwjgl3/src/main/java/io/github/some_example_name/entities/GameMaster.java
 		batch = new SpriteBatch();//To draw Sprites 
 		shape = new ShapeRenderer();
 		entityManager = new EntityManager();
@@ -52,6 +58,27 @@ public class GameMaster extends ApplicationAdapter{
 		
 		createEntityObjects();
 		
+=======
+	    batch = new SpriteBatch();
+	    shape = new ShapeRenderer();
+
+	    // Initialize entity manager
+	    entityManager = new EntityManager(); 
+
+	    // Ensure other managers are initialized
+	    collisionManager = new HandleCollision();
+	    movementManager = new MovementManager(30, true);
+	    sceneManager = new SceneManager(this);
+	    ioManager = new IOManager();
+        // Add scenes
+        sceneManager.addScene("MainMenu", new Scene(sceneManager, Scene.SceneType.MAIN_MENU));
+        sceneManager.addScene("GamePlay", new Scene(sceneManager, Scene.SceneType.GAMEPLAY));
+        sceneManager.addScene("EndScreen", new Scene(sceneManager, Scene.SceneType.END_SCREEN));
+        // Start with the main menu
+        sceneManager.switchScene("MainMenu", null);
+
+	    createEntityObjects(); // Make sure entities are created
+>>>>>>> Stashed changes:lwjgl3/src/main/java/io/github/some_example_name/lwjgl3/GameMaster.java
 	}
 	
 	//Initialize the entity Objects 
@@ -69,11 +96,15 @@ public class GameMaster extends ApplicationAdapter{
 		
 	@Override
 	public void render() {
+
 		
 	//render Background
 	ScreenUtils.clear(0,0,0.2f,1);
 	
+<<<<<<< Updated upstream:lwjgl3/src/main/java/io/github/some_example_name/entities/GameMaster.java
 	movementManager.updateMovement(entityManager);
+=======
+>>>>>>> Stashed changes:lwjgl3/src/main/java/io/github/some_example_name/lwjgl3/GameMaster.java
 	
 	batch.begin();
 	entityManager.drawEntities(shape, batch);
@@ -82,7 +113,9 @@ public class GameMaster extends ApplicationAdapter{
 	}
 	
 	public void dispose() {
+        sceneManager.disposeAllScenes();
+    }
 		
 	}
 	
-}
+
