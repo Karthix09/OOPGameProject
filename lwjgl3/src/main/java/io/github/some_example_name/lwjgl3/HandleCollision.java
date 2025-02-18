@@ -17,6 +17,6 @@ public class HandleCollision {
 //	            System.out.println("Collision detected!");
 //	        }
 //	    }
-
+//
 
 }
