@@ -39,6 +39,8 @@ public class SceneManager {
             return;
         }
 
+        System.out.println("Switching scene to: " + sceneName);
+        
         if (transition != null) {
             transitioning = true;
             transitionTime = 0;
@@ -48,6 +50,7 @@ public class SceneManager {
             applySceneChange(sceneName);
         }
     }
+
 
     public void update(float deltaTime, SpriteBatch batch) {
         if (transitioning && currentTransition != null) {
@@ -68,8 +71,23 @@ public class SceneManager {
     }
 
     private void applySceneChange(String sceneName) {
-        game.setScreen(scenes.get(sceneName));
+        System.out.println("Applying scene change to: " + sceneName);
+
+        if (!scenes.containsKey(sceneName)) {
+            System.out.println("Error: Scene " + sceneName + " does not exist in SceneManager!");
+            return;
+        }
+
+        Scene newScene = scenes.get(sceneName);
+        if (newScene == null) {
+            System.out.println("Error: Scene " + sceneName + " is null!");
+            return;
+        }
+
+        game.setScreen(newScene);
+        System.out.println("Scene successfully changed to: " + sceneName);
     }
+
 
     public void disposeAllScenes() {
         for (Scene scene : scenes.values()) {

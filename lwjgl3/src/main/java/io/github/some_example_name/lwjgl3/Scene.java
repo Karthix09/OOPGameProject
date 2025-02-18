@@ -70,14 +70,20 @@ public class Scene implements Screen {
         if (Gdx.input.justTouched()) {
             int x = Gdx.input.getX();
             int y = Gdx.graphics.getHeight() - Gdx.input.getY(); // Convert to game coordinates
+
+            System.out.println("Click detected at: " + x + ", " + y);
+            
             SceneTransition fadeTransition = new SceneTransition(1.5f);
 
             if (sceneType == SceneType.MAIN_MENU && isButtonClicked(x, y, buttonPosition, button)) {
+                System.out.println("Start button clicked! Switching to GamePlay...");
                 sceneManager.switchScene("GamePlay", fadeTransition);
             } else if (sceneType == SceneType.END_SCREEN) {
                 if (isButtonClicked(x, y, restartButtonPosition, restartButton)) {
+                    System.out.println("Restart button clicked! Switching to GamePlay...");
                     sceneManager.switchScene("GamePlay", fadeTransition);
                 } else if (isButtonClicked(x, y, closeButtonPosition, closeButton)) {
+                    System.out.println("Close button clicked! Exiting game...");
                     Gdx.app.exit(); // Closes the application
                 }
             }
@@ -85,8 +91,13 @@ public class Scene implements Screen {
     }
 
     private boolean isButtonClicked(int x, int y, Vector2 buttonPos, Texture buttonTexture) {
-        return x >= buttonPos.x && x <= buttonPos.x + buttonTexture.getWidth()
-                && y >= buttonPos.y && y <= buttonPos.y + buttonTexture.getHeight();
+        boolean clicked = x >= buttonPos.x && x <= buttonPos.x + buttonTexture.getWidth()
+                       && y >= buttonPos.y && y <= buttonPos.y + buttonTexture.getHeight();
+        
+        if (clicked) {
+            System.out.println("Button Clicked at: " + x + ", " + y);
+        }
+        return clicked;
     }
 
     @Override public void show() {}
@@ -104,6 +115,3 @@ public class Scene implements Screen {
         if (closeButton != null) closeButton.dispose();
     }
 }
-
-
-
