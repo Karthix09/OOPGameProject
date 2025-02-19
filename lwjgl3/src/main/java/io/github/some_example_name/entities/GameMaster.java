@@ -53,7 +53,7 @@ public class GameMaster extends Game {
     private void createEntityObjects() {
         // Initialize player and objects
         player = new MovableEntity("noBackgrnd.png", 30, 0, 100, true, batch, false);
-        objects = new MovableEntity("Rock1_1_no_shadow.png", 50, 50, 10, true, batch, true);
+        objects = new MovableEntity("Rock1_1_no_shadow.png", 50, 200, 10, true, batch, true);
 
         // Add entities to entity manager
         entityManager.addEntity(player);
@@ -64,6 +64,18 @@ public class GameMaster extends Game {
     public void render() {
         ScreenUtils.clear(0, 0, 0.2f, 1);
         movementManager.updateMovement(entityManager);
+        
+        // Check if rocks have fallen past the screen
+        for (Entity entity : entityManager.getEntities()) {
+            if (entity instanceof MovableEntity) {
+                if (entity.getPosY() < 0) { // Rock has fallen off-screen
+                    ((MovableEntity) entity).resetPosition(entity.getPosX(), 600); // Reset to top
+                }
+            }
+        }
+        
+        // check for collision
+        collisionManager.detectCollision(entityManager.getEntities());
 
         batch.begin();
         entityManager.drawEntities(shape, batch);

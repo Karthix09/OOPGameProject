@@ -15,6 +15,7 @@ public class MovableEntity extends Entity implements iMovable{
 	//For drawing TextureObjects
 	private Texture texture;
 	private SpriteBatch batch;
+	private boolean hasCollided = false;
 	
 	private boolean isAIControlled; //Check if object is AI Controlled
 	
@@ -51,7 +52,14 @@ public class MovableEntity extends Entity implements iMovable{
 			batch.draw(this.texture, getPosX(), getPosY(), texture.getWidth(), texture.getHeight());
 		}
 		
-		
+		@Override
+	    public boolean hasCollided() {
+	        return hasCollided;
+	    }
+	    @Override
+	    public void setCollided(boolean collided) {
+	        this.hasCollided = collided;
+	    }
 		
 		//Getters 
 		public Texture getTexture() {
@@ -111,6 +119,12 @@ public class MovableEntity extends Entity implements iMovable{
 	    		// Clamp the bucket position to the screen boundaries
 	    	    this.setPosX(Math.max(0, Math.min(this.getPosX(), Gdx.graphics.getWidth() - this.getWidth())));
 	    	}
+		}
+		public void resetPosition(float newX, float newY) {
+		    this.setPosX(newX);
+		    this.setPosY(newY);
+		    this.setCollided(false); // ✅ Reset collision status
+		    System.out.println("Rock respawned at X=" + newX + ", Y=" + newY);
 		}
 
 
