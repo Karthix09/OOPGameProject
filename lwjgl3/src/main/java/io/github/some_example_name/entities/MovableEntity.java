@@ -12,6 +12,9 @@ import io.github.some_example_name.interfaces.iMovable;
 
 public class MovableEntity extends Entity implements iMovable{
   
+	private static final float WORLD_WIDTH = 1344;
+	private static final float WORLD_HEIGHT = 768;
+	
   //For drawing TextureObjects
   private Texture texture;
   private SpriteBatch batch;
@@ -21,7 +24,7 @@ public class MovableEntity extends Entity implements iMovable{
   
   
 //  Constructor for Movable Texture Object  
-  MovableEntity(String filePath, float x, float y, float speed, boolean isCollidable, SpriteBatch batch, boolean isAIControlled){
+  public MovableEntity(String filePath, float x, float y, float speed, boolean isCollidable, SpriteBatch batch, boolean isAIControlled){
     super(x, y, speed, isCollidable);
     this.texture = new Texture(Gdx.files.internal(filePath));
     this.batch = batch;
@@ -49,7 +52,10 @@ public class MovableEntity extends Entity implements iMovable{
     //Drawing the objects 
     @Override
     public void draw(ShapeRenderer shapeRenderer, SpriteBatch spriteBatch) {
-      batch.draw(this.texture, getPosX(), getPosY(), texture.getWidth(), texture.getHeight());
+    	if (batch == null) return; // ✅ Prevent null pointer errors
+
+        batch.draw(this.texture, getPosX(), getPosY(), texture.getWidth(), texture.getHeight());
+        
     }
     
     @Override
@@ -91,8 +97,8 @@ public class MovableEntity extends Entity implements iMovable{
           Random random = new Random();
           // When stone hits bottom, reset to top and change x position
           if(this.getPosY() <= 0) {
-            // Randomize stone speed with cap at 4
-            if(getSpeed() <= 5) {
+            // Randomize stone speed with cap at 3
+            if(getSpeed() <= 4) {
               this.setSpeed(getSpeed() + random.nextFloat() * 2);      
             }
             else {
@@ -100,9 +106,9 @@ public class MovableEntity extends Entity implements iMovable{
             }
                   
             // Recalculate new randomX for stone
-            float randomX = random.nextFloat() * (Gdx.graphics.getWidth() - this.getWidth());
+            float randomX = random.nextFloat() * (WORLD_WIDTH - this.getWidth());
             this.setPosX(randomX);
-            this.setPosY(400);
+            this.setPosY(600);
           }
           // Set stone to keep falling
           this.setPosY(this.getPosY() - this.getSpeed());
@@ -117,7 +123,7 @@ public class MovableEntity extends Entity implements iMovable{
             moveRight();
           }
           // Clamp the bucket position to the screen boundaries
-            this.setPosX(Math.max(0, Math.min(this.getPosX(), Gdx.graphics.getWidth() - this.getWidth())));
+            this.setPosX(Math.max(0, Math.min(this.getPosX(), WORLD_WIDTH - this.getWidth())));
         }
     }
     public void resetPosition(float newX, float newY) {

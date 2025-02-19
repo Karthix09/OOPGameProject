@@ -13,6 +13,7 @@ public abstract class Entity{
 	private Color colour; //Just in case we need a color for shapes 
 	private boolean isCollidable; //To check if object instantiated is a Collidable.
 	private float speed;//Declare Speed for Movable Entity 
+	protected Texture texture;
 
 	
 	//Constructor for IMMovable
@@ -111,4 +112,13 @@ public abstract class Entity{
 	    public abstract boolean hasCollided();
 	    public abstract void setCollided(boolean collided);
 
-}
+	    public float getWidth() {
+	        return (texture != null) ? texture.getWidth() : 32; // Default width if no texture
+	    }
+
+	    public float getHeight() {
+	        return (texture != null) ? texture.getHeight() : 32; // Default height if no texture
+	    }
+	}
+
+
