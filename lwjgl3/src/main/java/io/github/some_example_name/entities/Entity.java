@@ -107,5 +107,8 @@ public abstract class Entity{
 			this.isCollidable= isCollidable;
 		}
 
+		// 🚀 Abstract method for collision tracking
+	      public abstract boolean hasCollided();
+	      public abstract void setCollided(boolean collided);
 
 }
