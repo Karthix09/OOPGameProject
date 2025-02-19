@@ -1,99 +1,96 @@
 package io.github.some_example_name.lwjgl3;
 
 import com.badlogic.gdx.Game;
+import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import java.util.HashMap;
 import java.util.Map;
 
 public class SceneManager {
     private Game game;
-    private Map<String, Scene> scenes;
-    private SceneTransition currentTransition;
-    private float transitionTime = 0;
-    private boolean transitioning = false;
+    private Map<String, Screen> scenes;
+    private Screen activeScene;
+    private SceneTransition activeTransition;
+    private float transitionTime;
+    private boolean transitioning;
     private String nextSceneName;
+    private SpriteBatch batch;
 
     public SceneManager(Game game) {
         this.game = game;
         this.scenes = new HashMap<>();
+        this.batch = new SpriteBatch();
     }
 
-    public void addScene(String sceneName, Scene scene) {
-        scenes.put(sceneName, scene);
+    public void createScenes() {
+        addScene("StartScreen", new Scene(this, "StartScreen"));
+        addScene("GamePlay", new Scene(this, "GamePlay"));
+        addScene("EndScreen", new Scene(this, "EndScreen"));
+
+        switchScene("StartScreen", null);
     }
 
-    public void removeScene(String sceneName) {
-        if (scenes.containsKey(sceneName)) {
-            if (game.getScreen() == scenes.get(sceneName)) {
-                System.out.println("Cannot unload active scene: " + sceneName);
-                return;
-            }
-            scenes.get(sceneName).dispose();
-            scenes.remove(sceneName);
+    public void addScene(String sceneName, Screen scene) {
+        if (!scenes.containsKey(sceneName)) {
+            scenes.put(sceneName, scene);
         }
     }
 
     public void switchScene(String sceneName, SceneTransition transition) {
         if (!scenes.containsKey(sceneName)) {
-            System.out.println("Scene " + sceneName + " not found.");
+            System.out.println("Error: Scene " + sceneName + " not found.");
             return;
         }
 
-        System.out.println("Switching scene to: " + sceneName);
-        
         if (transition != null) {
             transitioning = true;
+            activeTransition = transition;
             transitionTime = 0;
-            currentTransition = transition;
             nextSceneName = sceneName;
         } else {
             applySceneChange(sceneName);
         }
     }
 
-
-    public void update(float deltaTime, SpriteBatch batch) {
-        if (transitioning && currentTransition != null) {
-            transitionTime += deltaTime;
-            if (transitionTime >= currentTransition.getDuration()) {
+    public void update(float delta) {
+        if (transitioning && activeTransition != null) {
+            transitionTime += delta;
+            if (transitionTime >= activeTransition.getDuration()) {
                 applySceneChange(nextSceneName);
                 transitioning = false;
             }
         }
 
-        if (game.getScreen() != null) {
-            game.getScreen().render(deltaTime);
+        if (activeScene != null) {
+            activeScene.render(delta);
         }
+    }
 
-        if (transitioning) {
-            currentTransition.renderTransition(batch, transitionTime);
+    public void render() {
+        if (activeScene != null) {
+            activeScene.render(0);
+        }
+        if (transitioning && activeTransition != null) {
+            activeTransition.renderTransition(batch, transitionTime);
         }
     }
 
     private void applySceneChange(String sceneName) {
-        System.out.println("Applying scene change to: " + sceneName);
-
-        if (!scenes.containsKey(sceneName)) {
-            System.out.println("Error: Scene " + sceneName + " does not exist in SceneManager!");
-            return;
-        }
-
-        Scene newScene = scenes.get(sceneName);
-        if (newScene == null) {
-            System.out.println("Error: Scene " + sceneName + " is null!");
-            return;
-        }
-
-        game.setScreen(newScene);
-        System.out.println("Scene successfully changed to: " + sceneName);
+        activeScene = scenes.get(sceneName);
+        game.setScreen(activeScene);
     }
 
+    public void resize(int width, int height) {
+        if (activeScene != null) {
+            activeScene.resize(width, height);
+        }
+    }
 
     public void disposeAllScenes() {
-        for (Scene scene : scenes.values()) {
+        for (Screen scene : scenes.values()) {
             scene.dispose();
         }
         scenes.clear();
+        batch.dispose();
     }
 }
-

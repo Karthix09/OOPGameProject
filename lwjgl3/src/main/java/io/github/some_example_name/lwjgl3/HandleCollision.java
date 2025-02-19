@@ -93,6 +93,4 @@ public class HandleCollision extends CollisionManager {
     public void setCollided(boolean collided) {
         this.hasCollided = collided;
     }
-
-
 }
