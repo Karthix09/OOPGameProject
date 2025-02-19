@@ -9,7 +9,8 @@ import io.github.some_example_name.entities.EntityManager;
 import io.github.some_example_name.entities.MovableEntity;
 import io.github.some_example_name.movement.MovementManager;
 import io.github.some_example_name.lwjgl3.HandleCollision;
-
+import io.github.some_example_name.lwjgl3.IOManager;
+import com.badlogic.gdx.audio.Music;
 
 public class GameScreen extends Scene {
     private static final float WORLD_WIDTH = 1344;
@@ -21,6 +22,8 @@ public class GameScreen extends Scene {
     private MovableEntity fallingRock;
     private MovementManager movementManager;
     private HandleCollision collisionManager;
+    private IOManager ioManager;
+    private Music backgroundMusic;
 
     public GameScreen(SceneManager sceneManager) {
         super(sceneManager); // Call constructor of the parent class
@@ -45,7 +48,8 @@ public class GameScreen extends Scene {
         if (collisionManager == null) {
             throw new IllegalStateException("collisionManager failed to initialize");
         }
-
+        
+        ioManager = new IOManager(sceneManager);
 
         // Create Player Entity (Movable by user)
         player = new MovableEntity("noBackgrnd.png", 30, 0, 200, true, batch, false);
@@ -54,6 +58,12 @@ public class GameScreen extends Scene {
      // Create Falling Rock (AI-controlled movement, random X position)
         fallingRock = new MovableEntity("Rock.png", WORLD_WIDTH / 2, 600, 100, true, batch, true);
         entityManager.addEntity(fallingRock);
+        
+     // Load and Play Background Music
+        backgroundMusic = Gdx.audio.newMusic(Gdx.files.internal("backgroundmusic.wav"));
+        backgroundMusic.setLooping(true);
+        backgroundMusic.setVolume(0.2f); // Set volume to 20%
+        backgroundMusic.play();
     }
     
 
@@ -68,13 +78,12 @@ public class GameScreen extends Scene {
         entityManager.drawEntities(null, batch);  // Draw entities inside batch
         batch.end();  // Ensure batch ends after drawing
 
+     // Update player movement via IOManager
+        ioManager.handlePlayerInput((MovableEntity) entityManager.getEntities().get(0));
+        
      // Update entity movements
         movementManager.updateMovement(entityManager);
         entityManager.updateEntities();
-        
-     // Ensure the player does not exceed screen boundaries
-        float playerWidth = player.getWidth();
-        player.setPosX(Math.max(0, Math.min(player.getPosX(), WORLD_WIDTH - playerWidth)));
         
      // Detect collisions every frame
         if (collisionManager != null) {
@@ -83,14 +92,17 @@ public class GameScreen extends Scene {
             System.err.println("collisionManager is NULL during render!");
         }
 
-        if (Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)) {
-            sceneManager.switchScene("EndScreen", new SceneTransition(1.5f));  // Switch to the end screen
-        }
+     // Handle exit input via IOManager
+        ioManager.handleExitInput();
     }
 
     @Override
     public void dispose() {
         super.dispose();
         background.dispose();
+        if (backgroundMusic != null) {
+            backgroundMusic.stop();
+            backgroundMusic.dispose();
+        }
     }
 }

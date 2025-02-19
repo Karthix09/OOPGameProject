@@ -13,5 +13,7 @@ public class NoCollision{
           // No collision handling
       }
 
-
+      public void dispose() {
+    	  
+      }
 }

@@ -97,12 +97,12 @@ public class MovableEntity extends Entity implements iMovable{
           Random random = new Random();
           // When stone hits bottom, reset to top and change x position
           if(this.getPosY() <= 0) {
-            // Randomize stone speed with cap at 3
-            if(getSpeed() <= 4) {
-              this.setSpeed(getSpeed() + random.nextFloat() * 2);      
+            // Randomize stone speed with cap at 2
+            if(getSpeed() <= 2) {
+              this.setSpeed(getSpeed() + random.nextFloat());      
             }
             else {
-              this.setSpeed(this.getSpeed() - random.nextFloat() * 2);
+              this.setSpeed(this.getSpeed() - random.nextFloat());
             }
                   
             // Recalculate new randomX for stone
@@ -111,7 +111,7 @@ public class MovableEntity extends Entity implements iMovable{
             this.setPosY(600);
           }
           // Set stone to keep falling
-          this.setPosY(this.getPosY() - this.getSpeed());
+          this.setPosY(this.getPosY() - this.getSpeed() * 0.5f);
         }
         
         // Movement for Game Character

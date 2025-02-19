@@ -9,6 +9,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
+import io.github.some_example_name.lwjgl3.IOManager;
 
 public class StartScreen extends Scene {
     private static final float WORLD_WIDTH = 1344; // Image width
@@ -18,6 +19,7 @@ public class StartScreen extends Scene {
     private Texture background;
     private BitmapFont font;
     private Viewport viewport;
+    private IOManager ioManager;
 
     public StartScreen(SceneManager sceneManager) {
         super(sceneManager);
@@ -26,6 +28,8 @@ public class StartScreen extends Scene {
         font = new BitmapFont();
         viewport = new FitViewport(WORLD_WIDTH, WORLD_HEIGHT);
         viewport.apply();
+        
+        ioManager = new IOManager(sceneManager); // Initialize IOManager
     }
 
     @Override
@@ -43,10 +47,12 @@ public class StartScreen extends Scene {
 
         batch.end();
 
-        if (Gdx.input.isKeyJustPressed(Input.Keys.ENTER)) {
-            SceneTransition fadeTransition = new SceneTransition(1.5f);
-            sceneManager.switchScene("GamePlay", fadeTransition);
-        }
+//        if (Gdx.input.isKeyJustPressed(Input.Keys.ENTER)) {
+//            SceneTransition fadeTransition = new SceneTransition(1.5f);
+//            sceneManager.switchScene("GamePlay", fadeTransition);
+//        }
+        ioManager.handleStartInput(); 
+        // Delegate input handling to IO Manager
     }
 
     @Override

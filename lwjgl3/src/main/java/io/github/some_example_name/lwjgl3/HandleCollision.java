@@ -3,17 +3,22 @@ package io.github.some_example_name.lwjgl3;
 import io.github.some_example_name.entities.Entity;
 import io.github.some_example_name.entities.MovableEntity;
 import java.util.List;
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.math.Intersector;
 import com.badlogic.gdx.math.Rectangle;
+
 
 public class HandleCollision extends CollisionManager {
 
     private int playerCollisions = 0; // Track collisions
     private static final int MAX_COLLISIONS = 10; // Game over threshold
     private SceneManager sceneManager;
+    private Sound collisionSound;
 
     public HandleCollision(SceneManager sceneManager) {
         this.sceneManager = sceneManager;
+        collisionSound = Gdx.audio.newSound(Gdx.files.internal("hurt.wav")); // Load sound file
     }
 
     @Override
@@ -35,6 +40,9 @@ public class HandleCollision extends CollisionManager {
                     playerCollisions++;
                     System.out.println("Total Collisions: " + playerCollisions);
                     
+                 // Play hurt sound when collision occurs
+                    collisionSound.play(1.0f);
+                    
                     // Reset collision flag so future collisions are detected
                     e1.setCollided(false);
                     e2.setCollided(false);
@@ -47,6 +55,12 @@ public class HandleCollision extends CollisionManager {
                     }
                 }
             }
+        }
+    }
+    @Override
+    public void dispose() {
+        if (collisionSound != null) {
+            collisionSound.dispose(); //  Dispose sound to prevent memory leaks
         }
     }
 }
