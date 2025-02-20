@@ -11,6 +11,7 @@ import io.github.some_example_name.movement.MovementManager;
 import io.github.some_example_name.lwjgl3.HandleCollision;
 import io.github.some_example_name.lwjgl3.IOManager;
 import com.badlogic.gdx.audio.Music;
+import io.github.some_example_name.lwjgl3.KeyboardInput;
 
 public class GameScreen extends Scene {
     private static final float WORLD_WIDTH = 1344;
@@ -56,7 +57,7 @@ public class GameScreen extends Scene {
         entityManager.addEntity(player);
 
      // Create Falling Rock (AI-controlled movement, random X position)
-        fallingRock = new MovableEntity("Rock.png", WORLD_WIDTH / 2, 600, 100, true, batch, true);
+        fallingRock = new MovableEntity("Rock.png", WORLD_WIDTH / 2, 600, 2, true, batch, true);
         entityManager.addEntity(fallingRock);
         
      // Load and Play Background Music
@@ -78,8 +79,8 @@ public class GameScreen extends Scene {
         entityManager.drawEntities(null, batch);  // Draw entities inside batch
         batch.end();  // Ensure batch ends after drawing
 
-     // Update player movement via IOManager
-        ioManager.handlePlayerInput((MovableEntity) entityManager.getEntities().get(0));
+     // Update player movement via KeyboardInput
+        ioManager.getKeyboardInput().handlePlayerInput((MovableEntity) entityManager.getEntities().get(0));
         
      // Update entity movements
         movementManager.updateMovement(entityManager);
@@ -92,8 +93,8 @@ public class GameScreen extends Scene {
             System.err.println("collisionManager is NULL during render!");
         }
 
-     // Handle exit input via IOManager
-        ioManager.handleExitInput();
+     // Handle exit input via KeyboardInput
+        ioManager.getKeyboardInput().handleExitInput();
     }
 
     @Override

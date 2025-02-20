@@ -52,7 +52,7 @@ public class MovableEntity extends Entity implements iMovable{
     //Drawing the objects 
     @Override
     public void draw(ShapeRenderer shapeRenderer, SpriteBatch spriteBatch) {
-    	if (batch == null) return; // ✅ Prevent null pointer errors
+    	if (batch == null) return; // Prevent null pointer errors
 
         batch.draw(this.texture, getPosX(), getPosY(), texture.getWidth(), texture.getHeight());
         
@@ -97,8 +97,8 @@ public class MovableEntity extends Entity implements iMovable{
           Random random = new Random();
           // When stone hits bottom, reset to top and change x position
           if(this.getPosY() <= 0) {
-            // Randomize stone speed with cap at 2
-            if(getSpeed() <= 2) {
+            // Randomize stone speed with cap at 10
+            if(getSpeed() <= 10) {
               this.setSpeed(getSpeed() + random.nextFloat());      
             }
             else {
@@ -116,13 +116,13 @@ public class MovableEntity extends Entity implements iMovable{
         
         // Movement for Game Character
         else {
-          if (Gdx.input.isKeyPressed(Input.Keys.LEFT)) { // Get IOManager
-            moveLeft();
-          }
-          if (Gdx.input.isKeyPressed(Input.Keys.RIGHT)) { //
-            moveRight();
-          }
-          // Clamp the bucket position to the screen boundaries
+//          if (Gdx.input.isKeyPressed(Input.Keys.LEFT)) { // Get IOManager
+//            moveLeft();
+//          }
+//          if (Gdx.input.isKeyPressed(Input.Keys.RIGHT)) { //
+//            moveRight();
+//          }
+//          // Clamp the bucket position to the screen boundaries
             this.setPosX(Math.max(0, Math.min(this.getPosX(), WORLD_WIDTH - this.getWidth())));
         }
     }

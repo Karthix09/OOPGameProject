@@ -12,7 +12,7 @@ import com.badlogic.gdx.math.Rectangle;
 public class HandleCollision extends CollisionManager {
 
     private int playerCollisions = 0; // Track collisions
-    private static final int MAX_COLLISIONS = 10; // Game over threshold
+    private static final int MAX_COLLISIONS = 1; // Game over threshold
     private SceneManager sceneManager;
     private Sound collisionSound;
 
