@@ -51,7 +51,7 @@ public class StartScreen extends Scene {
 //            SceneTransition fadeTransition = new SceneTransition(1.5f);
 //            sceneManager.switchScene("GamePlay", fadeTransition);
 //        }
-        ioManager.handleStartInput(); 
+        ioManager.getKeyboardInput().handleStartInput(); 
         // Delegate input handling to IO Manager
     }
 
