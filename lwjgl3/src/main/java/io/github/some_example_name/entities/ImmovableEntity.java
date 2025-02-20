@@ -55,6 +55,18 @@ public class ImmovableEntity extends Entity{
 		    public float getHeight() {
 		    	return this.texture.getHeight();
 		    }
+
+			@Override
+			public boolean hasCollided() {
+				// TODO Auto-generated method stub
+				return false;
+			}
+
+			@Override
+			public void setCollided(boolean collided) {
+				// TODO Auto-generated method stub
+				
+			}
 		  
 
 }

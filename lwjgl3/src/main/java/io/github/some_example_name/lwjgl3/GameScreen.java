@@ -1,39 +1,108 @@
 package io.github.some_example_name.lwjgl3;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.utils.viewport.FitViewport;
+import io.github.some_example_name.entities.EntityManager;
+import io.github.some_example_name.entities.MovableEntity;
+import io.github.some_example_name.movement.MovementManager;
+import io.github.some_example_name.lwjgl3.HandleCollision;
+import io.github.some_example_name.lwjgl3.IOManager;
+import com.badlogic.gdx.audio.Music;
 
-public class GameScreen implements Screen {
-    private SceneManager sceneManager;
-    private SpriteBatch batch;
+public class GameScreen extends Scene {
+    private static final float WORLD_WIDTH = 1344;
+    private static final float WORLD_HEIGHT = 768;
+
     private Texture background;
+    private EntityManager entityManager;
+    private MovableEntity player;
+    private MovableEntity fallingRock;
+    private MovementManager movementManager;
+    private HandleCollision collisionManager;
+    private IOManager ioManager;
+    private Music backgroundMusic;
 
     public GameScreen(SceneManager sceneManager) {
-        this.sceneManager = sceneManager;
-        batch = new SpriteBatch();
+        super(sceneManager); // Call constructor of the parent class
         background = new Texture("game_bg.png");
+        viewport = new FitViewport(WORLD_WIDTH, WORLD_HEIGHT);
+        viewport.apply();
+        
+     // Initialize Managers
+        entityManager = new EntityManager();
+        movementManager = new MovementManager(); // Ensure movementManager is initialized
+        
+        if (sceneManager == null) {
+            throw new IllegalStateException("SceneManager is NULL! Cannot initialize HandleCollision.");
+        }
+        
+        if (movementManager == null ) {
+            throw new IllegalStateException("Managers failed to initialize");
+        }
+        
+        collisionManager = new HandleCollision(sceneManager);
+        
+        if (collisionManager == null) {
+            throw new IllegalStateException("collisionManager failed to initialize");
+        }
+        
+        ioManager = new IOManager(sceneManager);
+
+        // Create Player Entity (Movable by user)
+        player = new MovableEntity("noBackgrnd.png", 30, 0, 200, true, batch, false);
+        entityManager.addEntity(player);
+
+     // Create Falling Rock (AI-controlled movement, random X position)
+        fallingRock = new MovableEntity("Rock.png", WORLD_WIDTH / 2, 600, 100, true, batch, true);
+        entityManager.addEntity(fallingRock);
+        
+     // Load and Play Background Music
+        backgroundMusic = Gdx.audio.newMusic(Gdx.files.internal("backgroundmusic.wav"));
+        backgroundMusic.setLooping(true);
+        backgroundMusic.setVolume(0.2f); // Set volume to 20%
+        backgroundMusic.play();
     }
+    
 
     @Override
     public void render(float delta) {
+        viewport.update(Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), true);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-        batch.begin();
-        batch.draw(background, 0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-        batch.end();
-    }
 
-    @Override public void show() {}
-    @Override public void resize(int width, int height) {}
-    @Override public void pause() {}
-    @Override public void resume() {}
-    @Override public void hide() {}
+        batch.setProjectionMatrix(viewport.getCamera().combined);
+        batch.begin();  // Ensure batch begins before drawing
+        batch.draw(background, 0, 0, WORLD_WIDTH, WORLD_HEIGHT);
+        entityManager.drawEntities(null, batch);  // Draw entities inside batch
+        batch.end();  // Ensure batch ends after drawing
+
+     // Update player movement via IOManager
+        ioManager.handlePlayerInput((MovableEntity) entityManager.getEntities().get(0));
+        
+     // Update entity movements
+        movementManager.updateMovement(entityManager);
+        entityManager.updateEntities();
+        
+     // Detect collisions every frame
+        if (collisionManager != null) {
+            collisionManager.detectCollision(entityManager.getEntities());
+        } else {
+            System.err.println("collisionManager is NULL during render!");
+        }
+
+     // Handle exit input via IOManager
+        ioManager.handleExitInput();
+    }
 
     @Override
     public void dispose() {
-        batch.dispose();
+        super.dispose();
         background.dispose();
+        if (backgroundMusic != null) {
+            backgroundMusic.stop();
+            backgroundMusic.dispose();
+        }
     }
 }

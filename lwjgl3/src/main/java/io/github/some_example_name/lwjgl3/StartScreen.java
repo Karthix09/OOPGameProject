@@ -1,49 +1,67 @@
 package io.github.some_example_name.lwjgl3;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
-import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.utils.viewport.FitViewport;
+import com.badlogic.gdx.utils.viewport.Viewport;
+import io.github.some_example_name.lwjgl3.IOManager;
 
-public class StartScreen implements Screen {
-    private SceneManager sceneManager;
+public class StartScreen extends Scene {
+    private static final float WORLD_WIDTH = 1344; // Image width
+    private static final float WORLD_HEIGHT = 768; // Image height
+
     private SpriteBatch batch;
     private Texture background;
     private BitmapFont font;
+    private Viewport viewport;
+    private IOManager ioManager;
 
     public StartScreen(SceneManager sceneManager) {
-        this.sceneManager = sceneManager;
+        super(sceneManager);
         batch = new SpriteBatch();
-        background = new Texture("start_screen_bg.png"); // Ensure this file is in assets
+        background = new Texture("main_menu_bg.png");
         font = new BitmapFont();
+        viewport = new FitViewport(WORLD_WIDTH, WORLD_HEIGHT);
+        viewport.apply();
+        
+        ioManager = new IOManager(sceneManager); // Initialize IOManager
     }
 
     @Override
     public void render(float delta) {
+        viewport.update(Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), true);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+        
+        batch.setProjectionMatrix(viewport.getCamera().combined);
         batch.begin();
-        batch.draw(background, 0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+        batch.draw(background, 0, 0, WORLD_WIDTH, WORLD_HEIGHT);
 
         font.setColor(Color.WHITE);
         font.getData().setScale(2);
-        font.draw(batch, "Press ENTER to Start Game", 
-                  Gdx.graphics.getWidth() / 2 - 150, 
-                  Gdx.graphics.getHeight() / 2);
+        font.draw(batch, "Press ENTER to Start Game", WORLD_WIDTH / 2 - 150, WORLD_HEIGHT / 2);
 
         batch.end();
 
-        if (Gdx.input.isKeyJustPressed(Input.Keys.ENTER)) {
-            SceneTransition fadeTransition = new SceneTransition(1.5f);
-            sceneManager.switchScene("GamePlay", fadeTransition);
-        }
+//        if (Gdx.input.isKeyJustPressed(Input.Keys.ENTER)) {
+//            SceneTransition fadeTransition = new SceneTransition(1.5f);
+//            sceneManager.switchScene("GamePlay", fadeTransition);
+//        }
+        ioManager.handleStartInput(); 
+        // Delegate input handling to IO Manager
     }
 
-    @Override public void show() {}
-    @Override public void resize(int width, int height) {}
+    @Override
+    public void resize(int width, int height) {
+        viewport.update(width, height, true);
+    }
+
+    @Override
+    public void show() {}
     @Override public void pause() {}
     @Override public void resume() {}
     @Override public void hide() {}
