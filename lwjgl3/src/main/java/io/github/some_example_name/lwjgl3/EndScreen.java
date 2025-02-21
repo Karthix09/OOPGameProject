@@ -4,10 +4,11 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.utils.viewport.FitViewport;
+
+
 
 public class EndScreen extends Scene {
     private static final float WORLD_WIDTH = 1344;
@@ -15,6 +16,7 @@ public class EndScreen extends Scene {
 
     private Texture background;
     private BitmapFont font;
+    private IOManager iomanager;
 
     public EndScreen(SceneManager sceneManager) {
         super(sceneManager); // Call constructor of the parent class
@@ -22,6 +24,9 @@ public class EndScreen extends Scene {
         font = new BitmapFont();
         viewport = new FitViewport(WORLD_WIDTH, WORLD_HEIGHT);
         viewport.apply();
+        
+     // Fix: Initialize IOManager
+        this.iomanager = new IOManager(sceneManager);
     }
 
     @Override
@@ -42,9 +47,9 @@ public class EndScreen extends Scene {
         batch.end();
 
         if (Gdx.input.isKeyJustPressed(Input.Keys.ENTER)) {
-            sceneManager.switchScene("GamePlay", new SceneTransition(1.5f));
+            sceneManager.restartGame(); // Call the restart method instead of switching scenes
         } else if (Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)) {
-            Gdx.app.exit();
+            iomanager.getKeyboardInput().handleExitInput();
         }
     }
 

@@ -43,16 +43,14 @@ public class StartScreen extends Scene {
 
         font.setColor(Color.WHITE);
         font.getData().setScale(2);
-        font.draw(batch, "Press ENTER to Start Game", WORLD_WIDTH / 2 - 150, WORLD_HEIGHT / 2);
+        font.draw(batch, "Click ANYWHERE on the screen to Start program!", WORLD_WIDTH / 2 - 300, WORLD_HEIGHT / 2);
 
         batch.end();
 
-//        if (Gdx.input.isKeyJustPressed(Input.Keys.ENTER)) {
-//            SceneTransition fadeTransition = new SceneTransition(1.5f);
-//            sceneManager.switchScene("GamePlay", fadeTransition);
-//        }
-        ioManager.getKeyboardInput().handleStartInput(); 
-        // Delegate input handling to IO Manager
+        //check if left click on mouse is clicked
+        ioManager.getMouseInput().isLeftClicked();  
+        
+        
     }
 
     @Override
@@ -60,11 +58,7 @@ public class StartScreen extends Scene {
         viewport.update(width, height, true);
     }
 
-    @Override
-    public void show() {}
-    @Override public void pause() {}
-    @Override public void resume() {}
-    @Override public void hide() {}
+   
 
     @Override
     public void dispose() {

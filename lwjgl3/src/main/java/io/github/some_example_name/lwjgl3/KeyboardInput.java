@@ -2,39 +2,54 @@ package io.github.some_example_name.lwjgl3;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
-import io.github.some_example_name.entities.MovableEntity;
-import io.github.some_example_name.lwjgl3.SceneManager;
+
 
 public class KeyboardInput {
-    private SceneManager sceneManager;
+	
+	;
 
-    public KeyboardInput(SceneManager sceneManager) {
-        this.sceneManager = sceneManager;
+    public KeyboardInput() {
+        ;
     }
 
-    // Handles player movement
-    public void handlePlayerInput(MovableEntity player) {
-        if (Gdx.input.isKeyPressed(Input.Keys.LEFT)) {
-            player.moveLeft();
+
+    
+    private int lastPressedKey = -1; // Stores the last pressed key code
+
+  
+    public boolean isMovementKeyPressed() {
+        int[] keys = {
+            Input.Keys.UP, Input.Keys.DOWN, Input.Keys.LEFT, Input.Keys.RIGHT,
+            Input.Keys.W, Input.Keys.A, Input.Keys.S, Input.Keys.D, Input.Keys.SPACE
+        };
+
+        for (int key : keys) {
+            if (Gdx.input.isKeyPressed(key)) {
+                lastPressedKey = key; // Store the pressed key
+                return true;         // Return true on first detected key press
+            }
         }
-        if (Gdx.input.isKeyPressed(Input.Keys.RIGHT)) {
-            player.moveRight();
-        }
+
+        lastPressedKey = -1; // Reset if no key is pressed
+        return false;
     }
 
-    // Handles game start input
-    public void handleStartInput() {
-        if (Gdx.input.isKeyJustPressed(Input.Keys.ENTER)) {
-            System.out.println("Start button pressed, transitioning to GameScreen.");
-            sceneManager.switchScene("GamePlay", null);
-        }
+
+    public int getLastPressedKey() {
+        return lastPressedKey;
     }
 
-    // Handles exiting the game
+
+    public String getLastPressedKeyName() {
+        return (lastPressedKey != -1) ? Input.Keys.toString(lastPressedKey) : "None";
+    }
+    
     public void handleExitInput() {
         if (Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)) {
-            System.out.println("Escape pressed, transitioning to EndScreen.");
-            sceneManager.switchScene("EndScreen", null);
+            System.out.println("Escape pressed, exiting the program.");
+            Gdx.app.exit(); // Correctly exits the application
         }
+
+
     }
 }

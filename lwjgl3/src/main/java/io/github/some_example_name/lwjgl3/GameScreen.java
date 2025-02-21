@@ -5,8 +5,11 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.utils.viewport.FitViewport;
+
+import io.github.some_example_name.entities.Character;
 import io.github.some_example_name.entities.EntityManager;
 import io.github.some_example_name.entities.MovableEntity;
+import io.github.some_example_name.entities.Objects;
 import io.github.some_example_name.movement.MovementManager;
 import io.github.some_example_name.lwjgl3.HandleCollision;
 import io.github.some_example_name.lwjgl3.IOManager;
@@ -19,12 +22,13 @@ public class GameScreen extends Scene {
 
     private Texture background;
     private EntityManager entityManager;
-    private MovableEntity player;
-    private MovableEntity fallingRock;
+    private Character player;
+    private Objects fallingRock;
     private MovementManager movementManager;
     private HandleCollision collisionManager;
     private IOManager ioManager;
     private Music backgroundMusic;
+    
 
     public GameScreen(SceneManager sceneManager) {
         super(sceneManager); // Call constructor of the parent class
@@ -53,20 +57,21 @@ public class GameScreen extends Scene {
         ioManager = new IOManager(sceneManager);
 
         // Create Player Entity (Movable by user)
-        player = new MovableEntity("noBackgrnd.png", 30, 0, 200, true, batch, false);
+        player = new Character("noBackgrnd.png", 30, 0, 500, 10, 10, true, batch, false);
         entityManager.addEntity(player);
 
-     // Create Falling Rock (AI-controlled movement, random X position)
-        fallingRock = new MovableEntity("Rock.png", WORLD_WIDTH / 2, 600, 2, true, batch, true);
+     // Create Falling Rock 
+        fallingRock = new Objects("Rock.png", WORLD_WIDTH / 2, 600, 2, 10, true, batch, true);
         entityManager.addEntity(fallingRock);
         
      // Load and Play Background Music
         backgroundMusic = Gdx.audio.newMusic(Gdx.files.internal("backgroundmusic.wav"));
         backgroundMusic.setLooping(true);
-        backgroundMusic.setVolume(0.2f); // Set volume to 20%
+        backgroundMusic.setVolume(0.1f); // Set volume to 10%
         backgroundMusic.play();
-    }
-    
+        
+        
+	}
 
     @Override
     public void render(float delta) {
@@ -79,8 +84,7 @@ public class GameScreen extends Scene {
         entityManager.drawEntities(null, batch);  // Draw entities inside batch
         batch.end();  // Ensure batch ends after drawing
 
-     // Update player movement via KeyboardInput
-        ioManager.getKeyboardInput().handlePlayerInput((MovableEntity) entityManager.getEntities().get(0));
+     
         
      // Update entity movements
         movementManager.updateMovement(entityManager);
@@ -92,18 +96,22 @@ public class GameScreen extends Scene {
         } else {
             System.err.println("collisionManager is NULL during render!");
         }
-
-     // Handle exit input via KeyboardInput
-        ioManager.getKeyboardInput().handleExitInput();
+        
+         
     }
+    public void stopMusic() {
+        if (backgroundMusic != null) {
+            backgroundMusic.stop();
+            backgroundMusic.dispose();
+            backgroundMusic = null; // Ensure it doesn't get reused
+        }
+    }
+
 
     @Override
     public void dispose() {
         super.dispose();
         background.dispose();
-        if (backgroundMusic != null) {
-            backgroundMusic.stop();
-            backgroundMusic.dispose();
-        }
+        stopMusic(); // Stop and dispose of music properly
     }
 }

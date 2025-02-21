@@ -1,6 +1,7 @@
 package io.github.some_example_name.lwjgl3;
 
 import com.badlogic.gdx.Game;
+
 import com.badlogic.gdx.Screen;
 import java.util.HashMap;
 import java.util.Map;
@@ -8,6 +9,7 @@ import java.util.Map;
 public class SceneManager {
     private Game game;
     private Map<String, Screen> scenes;
+    private SceneTransition activeTransition;
 
     public SceneManager(Game game) {
         this.game = game;
@@ -41,6 +43,8 @@ public class SceneManager {
         if (transition != null) {
             // Apply fade transition if specified
             // Transition logic can be handled here if needed
+        	activeTransition = transition;
+            activeTransition.startTransition();
         }
         
         // Make sure game is not null and set the screen
@@ -50,6 +54,20 @@ public class SceneManager {
             System.out.println("Error: Game instance is null");
         }
     }
+ // Fix: Restart the game by recreating GameScreen
+    public void restartGame() {
+        System.out.println("Restarting game...");
+        
+     // Stop and dispose of old GameScreen's music if it exists
+        if (scenes.get("GamePlay") instanceof GameScreen) {
+            ((GameScreen) scenes.get("GamePlay")).stopMusic();
+        }
+        
+        scenes.remove("GamePlay"); // Remove old GameScreen
+        addScene("GamePlay", new GameScreen(this)); // Create a new GameScreen instance
+        switchScene("GamePlay", new SceneTransition(1.5f)); // Switch to the new GameScreen
+    }
+    
 
     // Dispose all scenes to clean up resources
     public void disposeAllScenes() {
