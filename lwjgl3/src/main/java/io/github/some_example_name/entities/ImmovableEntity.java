@@ -25,7 +25,7 @@ public class ImmovableEntity extends Entity{
 		//Update Method
 		@Override
 		public void update() {
-			// TODO Auto-generated method stub
+			
 			
 		}
 		
@@ -56,13 +56,13 @@ public class ImmovableEntity extends Entity{
 
 			@Override
 			public boolean hasCollided() {
-				// TODO Auto-generated method stub
+				
 				return false;
 			}
 
 			@Override
 			public void setCollided(boolean collided) {
-				// TODO Auto-generated method stub
+				
 				
 			}
 		  

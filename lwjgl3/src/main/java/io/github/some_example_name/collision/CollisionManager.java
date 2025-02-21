@@ -1,4 +1,4 @@
-package io.github.some_example_name.lwjgl3;
+package io.github.some_example_name.collision;
 
 import io.github.some_example_name.entities.Entity;
 import java.util.List;

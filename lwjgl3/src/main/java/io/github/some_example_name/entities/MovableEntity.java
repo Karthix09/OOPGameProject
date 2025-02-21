@@ -34,8 +34,7 @@ public abstract class MovableEntity extends Entity implements iMovable {
 		this.texture = new Texture(Gdx.files.internal(filePath));
 		this.batch = batch;
 		this.isAIControlled = isAIControlled;
-//		this.body = body;
-//		this.sprite.setPosition(x, y);
+
 	}
 	
 
@@ -90,11 +89,6 @@ public abstract class MovableEntity extends Entity implements iMovable {
 		public abstract void setPosition(float clampedX, float clampedY);
 
 
-
-//		public void moveLeft(float deltaTime) {
-//			// TODO Auto-generated method stub
-//			
-//		}
    
 
 }

@@ -1,4 +1,4 @@
-package io.github.some_example_name.lwjgl3;
+package io.github.some_example_name.scenes;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
@@ -7,6 +7,8 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.utils.viewport.FitViewport;
+
+import io.github.some_example_name.inputoutput.IOManager;
 
 
 
@@ -59,4 +61,27 @@ public class EndScreen extends Scene {
         background.dispose();
         font.dispose();
     }
+
+	@Override
+	public void show() {
+		
+		
+	}
+
+	@Override
+	public void pause() {
+		
+		
+	}
+
+	@Override
+	public void resume() {
+				
+	}
+
+	@Override
+	public void hide() {
+		
+		
+	}
 }

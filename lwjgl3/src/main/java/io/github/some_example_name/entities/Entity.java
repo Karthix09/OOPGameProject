@@ -75,24 +75,8 @@ public abstract class Entity{
 	    public void moveUp() {
 	    	this.posY = this.posY + this.speed * Gdx.graphics.getDeltaTime();
 	    }
-	
 
-		
-		//Setters 
-//		public void setColor(String colour){
-//			if (colour == "green") {
-//				this.colour = Color.GREEN;
-//				return;
-//			}
-//			if (colour == "red") {
-//				this.colour = Color.RED;
-//				return;
-//			}
-//			else {
-//	            this.colour = Color.WHITE; // Default to white if input is null
-//	            return;
-//	        }
-		
+	    
 		public void setSpeed(float speed) {
 			this.speed = speed;
 		}

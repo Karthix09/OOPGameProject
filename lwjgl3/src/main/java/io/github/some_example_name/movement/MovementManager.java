@@ -23,8 +23,8 @@ import io.github.some_example_name.entities.Entity;
 import io.github.some_example_name.entities.EntityManager;
 import io.github.some_example_name.entities.MovableEntity;
 import io.github.some_example_name.entities.Objects;
-import io.github.some_example_name.lwjgl3.IOManager;
-import io.github.some_example_name.lwjgl3.KeyboardInput;
+import io.github.some_example_name.inputoutput.IOManager;
+import io.github.some_example_name.inputoutput.KeyboardInput;
 
 //Movement manager class should be able to call movement methods and 
 // 1. Calls all Movement methods 
@@ -59,24 +59,6 @@ public class MovementManager{
 	    public MovementManager() {
 	    }
 	    
-	    
-	    // Handle all basic player movements
-//	    public void handlePlayerMovement(Player player, IOManager iomanager, boolean isGrounded) {
-//	        if (iomanager.isMovingLeft()) {
-//	        	System.out.println("TEST");
-//	            moveHorizontally(player, -1);
-//	            
-//	        } else if (iomanager.isMovingRight()) {
-//	            moveHorizontally(player, 1);
-//	            
-//	        } else {
-////	            stopMovement(player);
-//	        }
-//
-//	        if (iomanager.isJumping()) {
-//	            jump(player, isGrounded);
-//	        }
-//	    }
 	    
 	  //Processes the input and calls movement for Objects
 	    public void processObjInput(Objects object) 
@@ -131,13 +113,6 @@ public class MovementManager{
 	    }
 
 	    
-	    
-//	    public void jump(MovableEntity entity, boolean isGrounded) {
-//	        if (isGrounded) {
-//	            entity.applyLinearImpulse(new Vector2(0, jumpForce), entity.getWorldCenter(), true);
-//	        }
-//	    }
-	    
 
 		//Handles the movement of objects falling from the sky 
 		public void handleFallMovement(MovableEntity entity, float Speed) {
@@ -161,7 +136,6 @@ public class MovementManager{
 
 	    
 	    
-	    
 	 	// Updates all the movable entities 
 	    public void updateMovement(EntityManager entityManager) {
 	        List<Entity> entities = entityManager.getEntities(); //call getEntities() to get all entities in array list  
@@ -169,13 +143,8 @@ public class MovementManager{
 	        for (Entity entity : entities) {
 	            if (entity instanceof MovableEntity) { //check if entity is an instance of the MovableEntity class 
 	                MovableEntity movable = (MovableEntity) entity;
-//	                System.out.println(movable.getTexture());//check if texture is correct 
 	                movable.movement(); // call movement method in Movable Entity
-//	                movable.moveLeft();
-//	                movable.moveRight();
-//	                movable.moveUp();
-//	                movable.moveDown();
-//	                movable.update();
+
 	            }
 	        }
 	    }

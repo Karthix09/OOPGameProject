@@ -1,20 +1,22 @@
-package io.github.some_example_name.lwjgl3;
+package io.github.some_example_name.scenes;
 
 import com.badlogic.gdx.Gdx;
+
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 
+import io.github.some_example_name.collision.HandleCollision;
 import io.github.some_example_name.entities.Character;
 import io.github.some_example_name.entities.EntityManager;
 import io.github.some_example_name.entities.MovableEntity;
 import io.github.some_example_name.entities.Objects;
+import io.github.some_example_name.inputoutput.IOManager;
+import io.github.some_example_name.inputoutput.KeyboardInput;
 import io.github.some_example_name.movement.MovementManager;
-import io.github.some_example_name.lwjgl3.HandleCollision;
-import io.github.some_example_name.lwjgl3.IOManager;
+
 import com.badlogic.gdx.audio.Music;
-import io.github.some_example_name.lwjgl3.KeyboardInput;
 
 public class MainScreen extends Scene {
     private static final float WORLD_WIDTH = 1344;
@@ -114,4 +116,28 @@ public class MainScreen extends Scene {
         background.dispose();
         stopMusic(); // Stop and dispose of music properly
     }
+
+	@Override
+	public void show() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void pause() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void resume() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void hide() {
+		// TODO Auto-generated method stub
+		
+	}
 }

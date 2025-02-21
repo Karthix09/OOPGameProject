@@ -1,7 +1,10 @@
-package io.github.some_example_name.lwjgl3;
+package io.github.some_example_name.inputoutput;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
+
+import io.github.some_example_name.scenes.SceneManager;
+import io.github.some_example_name.scenes.SceneTransition;
 
 public class MouseInput {
 	private SceneManager sceneManager;

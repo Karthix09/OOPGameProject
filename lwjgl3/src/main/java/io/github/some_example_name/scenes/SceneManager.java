@@ -1,8 +1,10 @@
-package io.github.some_example_name.lwjgl3;
+package io.github.some_example_name.scenes;
 
 import com.badlogic.gdx.Game;
 
+
 import com.badlogic.gdx.Screen;
+
 import java.util.HashMap;
 import java.util.Map;
 

@@ -13,6 +13,7 @@ public class Objects extends MovableEntity {
 	private Sprite sprite;
 	private MovementManager mm;
 	float deltaTime = Gdx.graphics.getDeltaTime();
+	private float jumpForce;
 	
 	
 	
@@ -22,6 +23,7 @@ public class Objects extends MovableEntity {
 		super(filePath, x, y, speed, isCollidable, batch, isAIControlled);
 		this.texture = new Texture(Gdx.files.internal(filePath));
 		this.sprite = new Sprite(texture);
+		this.jumpForce = jumpforce;
 	}
 	
 	@Override
@@ -44,7 +46,15 @@ public class Objects extends MovableEntity {
 
 	}
 	
-	
+	// Getter and Setter for jumpForce
+		public float getJumpForce() {
+		    return jumpForce;
+		}
+
+		public void setJumpForce(float jumpForce) {
+		    this.jumpForce = jumpForce;
+		}
+		
 	
 	@Override
 	public void moveLeft() {

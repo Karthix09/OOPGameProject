@@ -1,6 +1,7 @@
-package io.github.some_example_name.lwjgl3;
+package io.github.some_example_name.scenes;
 
 import com.badlogic.gdx.Input;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
@@ -9,7 +10,8 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
-import io.github.some_example_name.lwjgl3.IOManager;
+
+import io.github.some_example_name.inputoutput.IOManager;
 
 public class StartScreen extends Scene {
     private static final float WORLD_WIDTH = 1344; // Image width
@@ -66,4 +68,27 @@ public class StartScreen extends Scene {
         background.dispose();
         font.dispose();
     }
+
+	@Override
+	public void show() {
+		
+	}
+
+	@Override
+	public void pause() {
+	
+		
+	}
+
+	@Override
+	public void resume() {
+		
+		
+	}
+
+	@Override
+	public void hide() {
+		
+
+	}
 }

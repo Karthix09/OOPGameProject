@@ -1,4 +1,4 @@
-package io.github.some_example_name.lwjgl3;
+package io.github.some_example_name.inputoutput;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
@@ -6,14 +6,10 @@ import com.badlogic.gdx.Input;
 
 public class KeyboardInput {
 	
-	;
-
     public KeyboardInput() {
-        ;
-    }
+    	
+    };
 
-
-    
     private int lastPressedKey = -1; // Stores the last pressed key code
 
   

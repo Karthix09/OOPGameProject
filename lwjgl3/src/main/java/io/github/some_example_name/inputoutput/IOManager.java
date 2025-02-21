@@ -1,6 +1,8 @@
-package io.github.some_example_name.lwjgl3;
+package io.github.some_example_name.inputoutput;
 
 import com.badlogic.gdx.InputAdapter;
+
+import io.github.some_example_name.scenes.SceneManager;
 
 public class IOManager extends InputAdapter {
     private KeyboardInput keyboardInput;

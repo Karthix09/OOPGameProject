@@ -11,8 +11,7 @@ import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.World;
 
-import io.github.some_example_name.lwjgl3.IOManager;
-
+import io.github.some_example_name.inputoutput.IOManager;
 import io.github.some_example_name.movement.MovementManager;
 
 

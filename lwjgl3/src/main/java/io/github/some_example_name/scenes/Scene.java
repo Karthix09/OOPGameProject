@@ -1,6 +1,7 @@
-package io.github.some_example_name.lwjgl3;
+package io.github.some_example_name.scenes;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.Screen;
@@ -35,9 +36,5 @@ public abstract class Scene implements Screen{
         }
     }
 
-    // Common show, pause, resume, hide methods
-    public void show() {}
-    public void pause() {}
-    public void resume() {}
-    public void hide() {}
+    
 }
