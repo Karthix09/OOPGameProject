@@ -16,7 +16,7 @@ public class MouseInput {
             System.out.println("Start button pressed, transitioning to GameScreen.");
             // Transition to the GamePlay screen
             SceneTransition fadeTransition = new SceneTransition(5f);
-            sceneManager.switchScene("GamePlay", fadeTransition);
+            sceneManager.switchScene("MainScreen", fadeTransition);
         }
     }
 

@@ -19,7 +19,7 @@ public class SceneManager {
     // Create and add scenes
     public void createScenes() {
         addScene("StartScreen", new StartScreen(this));
-        addScene("GamePlay", new GameScreen(this));
+        addScene("MainScreen", new MainScreen(this));
         addScene("EndScreen", new EndScreen(this));
         
         // Initially show the Start Screen
@@ -59,13 +59,13 @@ public class SceneManager {
         System.out.println("Restarting game...");
         
      // Stop and dispose of old GameScreen's music if it exists
-        if (scenes.get("GamePlay") instanceof GameScreen) {
-            ((GameScreen) scenes.get("GamePlay")).stopMusic();
+        if (scenes.get("MainScreen") instanceof MainScreen) {
+            ((MainScreen) scenes.get("MainScreen")).stopMusic();
         }
         
-        scenes.remove("GamePlay"); // Remove old GameScreen
-        addScene("GamePlay", new GameScreen(this)); // Create a new GameScreen instance
-        switchScene("GamePlay", new SceneTransition(1.5f)); // Switch to the new GameScreen
+        scenes.remove("MainScreen"); // Remove old GameScreen
+        addScene("MainScreen", new MainScreen(this)); // Create a new GameScreen instance
+        switchScene("MainScreen", new SceneTransition(1.5f)); // Switch to the new GameScreen
     }
     
 

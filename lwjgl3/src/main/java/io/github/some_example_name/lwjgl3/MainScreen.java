@@ -16,7 +16,7 @@ import io.github.some_example_name.lwjgl3.IOManager;
 import com.badlogic.gdx.audio.Music;
 import io.github.some_example_name.lwjgl3.KeyboardInput;
 
-public class GameScreen extends Scene {
+public class MainScreen extends Scene {
     private static final float WORLD_WIDTH = 1344;
     private static final float WORLD_HEIGHT = 768;
 
@@ -30,7 +30,7 @@ public class GameScreen extends Scene {
     private Music backgroundMusic;
     
 
-    public GameScreen(SceneManager sceneManager) {
+    public MainScreen(SceneManager sceneManager) {
         super(sceneManager); // Call constructor of the parent class
         background = new Texture("game_bg.png");
         viewport = new FitViewport(WORLD_WIDTH, WORLD_HEIGHT);
