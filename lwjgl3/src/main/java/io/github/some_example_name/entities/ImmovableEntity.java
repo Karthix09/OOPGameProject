@@ -11,9 +11,7 @@ public class ImmovableEntity extends Entity{
 		private SpriteBatch batch;
 		
 		
-		//Length and Height of Immovable - Can also be a shape 
-		private float length;
-		private float height;
+		
 		
 		
 		

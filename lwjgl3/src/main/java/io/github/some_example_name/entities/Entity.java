@@ -10,7 +10,6 @@ public abstract class Entity{
 	
 	private float posX; // Position X of Entity
 	private float posY;//Position Y of Entity
-	private Color colour; //Just in case we need a color for shapes 
 	private boolean isCollidable; //To check if object instantiated is a Collidable.
 	private float speed;//Declare Speed for Movable Entity 
 	protected Texture texture;
@@ -39,9 +38,8 @@ public abstract class Entity{
 		}
 	
 		//Getters 
-//		public Color getColor(){
-//			return this.colour;
-//		}
+
+
 		public float getPosX() {
 			return this.posX;
 		}
