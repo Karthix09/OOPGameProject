@@ -33,7 +33,6 @@ public class MainScreen extends Scene {
     private Texture background;
     private EntityManager entityManager;
     private Character player;
-    private Objects fallingRock;
     private MovementManager movementManager;
     private HandleCollision collisionManager;
     private IOManager ioManager;
@@ -47,6 +46,10 @@ public class MainScreen extends Scene {
     private float spawnInterval = 1.5f; // seconds
     private Random random;
     private final float MAX_SPEED = 2.5f;
+    
+    private String floatingText = "";
+    private float floatingTextTimer = 0f;
+    private final float floatingTextDuration = 1.0f;
     
     public MainScreen(SceneManager sceneManager) {
         super(sceneManager); // Call constructor of the parent class
@@ -73,7 +76,7 @@ public class MainScreen extends Scene {
         }
         
         
-        collisionManager = new HandleCollision(sceneManager, scoreManager);
+        collisionManager = new HandleCollision(sceneManager, scoreManager, this);
         
         if (collisionManager == null) {
             throw new IllegalStateException("collisionManager failed to initialize");
@@ -84,10 +87,6 @@ public class MainScreen extends Scene {
         // Create Player Entity (Movable by user)
         player = new Character("noBackgrnd.png", 30, 0, 500, 10, 10, true, batch, false);
         entityManager.addEntity(player);
-
-     // Create Falling Rock 
-//        fallingRock = new Objects("Rock.png", WORLD_WIDTH / 2, 600, 2, 10, true, batch, true);
-//        entityManager.addEntity(fallingRock);
         
      // Load and Play Background Music
         backgroundMusic = Gdx.audio.newMusic(Gdx.files.internal("backgroundmusic.wav"));
@@ -95,9 +94,9 @@ public class MainScreen extends Scene {
         backgroundMusic.setVolume(0.1f); // Set volume to 10%
         backgroundMusic.play();
         
-     // Font for score
+     // Font for score and positive or negative points
         font = new BitmapFont();
-        font.getData().setScale(2.5f); // Make score text bigger
+        font.getData().setScale(3.0f); // Make score text bigger
         layout = new GlyphLayout();
 	}
 
@@ -111,6 +110,14 @@ public class MainScreen extends Scene {
             spawnRandomFallingObject();
             spawnTimer = 0;
         }
+        
+        if (!floatingText.isEmpty()) {
+            floatingTextTimer += delta;
+            if (floatingTextTimer >= floatingTextDuration) {
+                floatingText = "";
+                floatingTextTimer = 0f;
+            }
+        }
 
         batch.setProjectionMatrix(viewport.getCamera().combined);
         batch.begin();  // Ensure batch begins before drawing
@@ -121,20 +128,27 @@ public class MainScreen extends Scene {
         String scoreText = "Score: " + scoreManager.getScore();
         layout.setText(font, scoreText);
         font.draw(batch, scoreText, WORLD_WIDTH - layout.width - 20, WORLD_HEIGHT - 20);
+        
+        // Draw a floating text for + or - points
+        if (!floatingText.isEmpty()) {
+            layout.setText(font, floatingText);
+
+            if (floatingText.contains("+")) {
+                font.setColor(0, 1, 0, 1); // green
+            } else if (floatingText.contains("-")) {
+                font.setColor(1, 0, 0, 1); // red
+            }
+
+            font.draw(batch, floatingText, WORLD_WIDTH / 2f - layout.width / 2f, WORLD_HEIGHT / 2f + 100);
+            font.setColor(1, 1, 1, 1); // reset to white
+        }
+        
         batch.end();
         
      // Update entity movements and collisions
         movementManager.updateMovement(entityManager);
         entityManager.updateEntities();
         collisionManager.detectCollision(entityManager.getEntities());
-        
-     // Detect collisions every frame
-//        if (collisionManager != null) {
-//            collisionManager.detectCollision(entityManager.getEntities());
-//        } else {
-//            System.err.println("collisionManager is NULL during render!");
-//        }
-        
          
     }
     
@@ -152,6 +166,12 @@ public class MainScreen extends Scene {
         }
 
         entityManager.addEntity(falling);
+    }
+    
+    // This will print a floating text to show +1 or -1 when the character collides with an object
+    public void showFloatingText(String text) {
+        this.floatingText = text;
+        this.floatingTextTimer = 0f;
     }
 
     public void stopMusic() {
