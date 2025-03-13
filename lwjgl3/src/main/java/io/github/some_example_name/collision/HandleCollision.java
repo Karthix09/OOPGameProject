@@ -1,27 +1,28 @@
 package io.github.some_example_name.collision;
 
 import io.github.some_example_name.entities.Entity;
-
 import io.github.some_example_name.entities.MovableEntity;
+import io.github.some_example_name.entities.Objects;
 import io.github.some_example_name.scenes.SceneManager;
 import io.github.some_example_name.scenes.SceneTransition;
+import io.github.some_example_name.score.ScoreManager;
 
 import java.util.List;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.math.Intersector;
 import com.badlogic.gdx.math.Rectangle;
 
-
 public class HandleCollision extends CollisionManager {
 
-    private int playerCollisions = 0; // Track collisions
-    private static final int MAX_COLLISIONS = 1; // Game over threshold
     private SceneManager sceneManager;
     private Sound collisionSound;
+    private ScoreManager scoreManager;
 
-    public HandleCollision(SceneManager sceneManager) {
+    public HandleCollision(SceneManager sceneManager, ScoreManager scoreManager) {
         this.sceneManager = sceneManager;
+        this.scoreManager = scoreManager;
         collisionSound = Gdx.audio.newSound(Gdx.files.internal("hurt.wav")); // Load sound file
     }
 
@@ -40,31 +41,50 @@ public class HandleCollision extends CollisionManager {
                 Entity e2 = entities.get(j);
 
                 if (e1.isCollidable() && e2.isCollidable() && checkCollision(e1, e2)) {
-                    System.out.println("Collision detected between " + e1.getClass().getSimpleName() + " and " + e2.getClass().getSimpleName());
-                    playerCollisions++;
-                    System.out.println("Total Collisions: " + playerCollisions);
-                    
-                 // Play hurt sound when collision occurs
-                    collisionSound.play(1.0f);
-                    
-                    // Reset collision flag so future collisions are detected
+                    // Identify which one is the player
+                    Entity player = (e1 instanceof MovableEntity && !((MovableEntity) e1).isAIControlled()) ? e1 :
+                                    (e2 instanceof MovableEntity && !((MovableEntity) e2).isAIControlled()) ? e2 : null;
+
+                    Entity object = (player == e1) ? e2 : e1;
+
+                    if (player != null && object instanceof Objects) {
+                        if (object.getTexture().toString().toLowerCase().contains("vegetable")) {
+                            scoreManager.increaseScore();
+                            System.out.println("Ate a vegetable! Score: " + scoreManager.getScore());
+                        } else if (object.getTexture().toString().toLowerCase().contains("icecream")) {
+                            scoreManager.decreaseScore();
+                            System.out.println("Ate ice cream! Score: " + scoreManager.getScore());
+                        }
+
+                        // Play sound effect
+                        collisionSound.play(1.0f);
+
+                        // Reset object's position
+                        object.setPosY(600);
+
+                        // Check for win or lose
+                        if (scoreManager.hasWon()) {
+                            System.out.println("You Win!");
+                            sceneManager.switchToEndScreen(true);
+                            return;
+                        } else if (scoreManager.hasLost()) {
+                            System.out.println("Game Over - You Lost!");
+                            sceneManager.switchToEndScreen(false);
+                            return;
+                        }
+                    }
+
                     e1.setCollided(false);
                     e2.setCollided(false);
-
-                    // If collision threshold is met, transition to end screen
-                    if (playerCollisions >= MAX_COLLISIONS) {
-                        System.out.println("Game Over! Switching to End Screen.");
-                        sceneManager.switchScene("EndScreen", new SceneTransition(1.5f));
-                        return;
-                    }
                 }
             }
         }
     }
+
     @Override
     public void dispose() {
         if (collisionSound != null) {
-            collisionSound.dispose(); //  Dispose sound to prevent memory leaks
+            collisionSound.dispose(); // Dispose sound to prevent memory leaks
         }
     }
-}
+} 
