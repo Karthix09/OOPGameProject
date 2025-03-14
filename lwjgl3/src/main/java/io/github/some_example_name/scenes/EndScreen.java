@@ -27,7 +27,7 @@ public class EndScreen extends Scene {
     
     public EndScreen(SceneManager sceneManager, boolean isWin) {
         super(sceneManager);
-        background = new Texture("end_screen_bg.png");
+        background = new Texture("healthyplate.jpg");
         font = new BitmapFont();
         viewport = new FitViewport(WORLD_WIDTH, WORLD_HEIGHT);
         viewport.apply();

@@ -26,7 +26,7 @@ public class StartScreen extends Scene {
     public StartScreen(SceneManager sceneManager) {
         super(sceneManager);
         batch = new SpriteBatch();
-        background = new Texture("main_menu_bg.png");
+        background = new Texture("main_menu_bg2.jpg");
         font = new BitmapFont();
         viewport = new FitViewport(WORLD_WIDTH, WORLD_HEIGHT);
         viewport.apply();

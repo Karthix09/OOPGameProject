@@ -53,7 +53,7 @@ public class MainScreen extends Scene {
     
     public MainScreen(SceneManager sceneManager) {
         super(sceneManager); // Call constructor of the parent class
-        background = new Texture("game_bg2.jpg");
+        background = new Texture("game_bg3.jpg");
         viewport = new FitViewport(WORLD_WIDTH, WORLD_HEIGHT);
         viewport.apply();
         
@@ -84,8 +84,8 @@ public class MainScreen extends Scene {
         
         ioManager = new IOManager(sceneManager);
 
-        // Create Player Entity (Movable by user)
-        player = new Character("noBackgrnd.png", 30, 0, 500, 10, 10, true, batch, false);
+        // Create Player (Plate) Entity (Movable by user)
+        player = new Character("plate5.png", 30, 0, 500, 10, 10, true, batch, false);
         entityManager.addEntity(player);
         
      // Load and Play Background Music
@@ -160,9 +160,9 @@ public class MainScreen extends Scene {
         Entity falling;
 
         if (spawnVegetable) {
-            falling = new Vegetable("vegetable.png", x, 600, speed, 0, true, batch);
+            falling = new Vegetable("vegetable3.png", x, 600, speed, 0, true, batch);
         } else {
-            falling = new IceCream("icecream.png", x, 600, speed, 0, true, batch);
+            falling = new IceCream("icecream2.png", x, 600, speed, 0, true, batch);
         }
 
         entityManager.addEntity(falling);
