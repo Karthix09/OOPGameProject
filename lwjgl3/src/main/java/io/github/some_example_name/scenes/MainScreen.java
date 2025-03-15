@@ -43,9 +43,9 @@ public class MainScreen extends Scene {
     private GlyphLayout layout;
     
     private float spawnTimer;
-    private float spawnInterval = 1.5f; // seconds
+    private float spawnInterval = 2.0f; // seconds
     private Random random;
-    private final float MAX_SPEED = 2.5f;
+    private final float MAX_SPEED = 2.0f;
     
     private String floatingText = "";
     private float floatingTextTimer = 0f;
