@@ -54,17 +54,20 @@ public class HandleCollision extends CollisionManager {
                  // If valid collision between player and an object
                     if (player != null && object instanceof Objects) {
                     	String textureName = object.getTexture().toString().toLowerCase();
-                    	
                     	// Check if the object is a vegetable,protein or ice cream using texture filename
-                    	if (textureName.contains("vegetable") || textureName.contains("protein")) {
-                            scoreManager.increaseScore();
-                            mainScreen.showFloatingText("+1"); // Show green floating +1 text
-                            System.out.println("Ate a vegetable! Score: " + scoreManager.getScore());
-                        } else if (textureName.contains("icecream")) {
-                            scoreManager.decreaseScore();
-                            mainScreen.showFloatingText("-1"); // Show red floating -1 text
-                            System.out.println("Ate ice cream! Score: " + scoreManager.getScore());
-                        }
+                        if (textureName.contains("vegetable")) {
+                               scoreManager.increaseScore();
+                               mainScreen.showFloatingText("+1"); // Show green floating +1 text
+                               System.out.println("Ate a vegetable! Score: " + scoreManager.getScore());
+                           } else if (textureName.contains("icecream")) {
+                               scoreManager.decreaseScore();
+                               mainScreen.showFloatingText("-1"); // Show red floating -1 text
+                               System.out.println("Ate ice cream! Score: " + scoreManager.getScore());
+                           } else if (textureName.contains("protein")) {
+                               scoreManager.increaseScore();
+                               mainScreen.showFloatingText("+1"); // Show green floating +1 text
+                               System.out.println("Ate a protein! Score: " + scoreManager.getScore());
+                           }
 
                         // Play sound effect
                         collisionSound.play(1.0f);
