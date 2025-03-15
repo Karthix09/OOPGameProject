@@ -18,6 +18,7 @@ import io.github.some_example_name.entities.EntityManager;
 import io.github.some_example_name.entities.IceCream;
 import io.github.some_example_name.entities.MovableEntity;
 import io.github.some_example_name.entities.Objects;
+import io.github.some_example_name.entities.Protein;
 import io.github.some_example_name.entities.Vegetable;
 import io.github.some_example_name.inputoutput.IOManager;
 import io.github.some_example_name.inputoutput.KeyboardInput;
@@ -29,6 +30,7 @@ import com.badlogic.gdx.audio.Music;
 public class MainScreen extends Scene {
     private static final float WORLD_WIDTH = 1344;
     private static final float WORLD_HEIGHT = 768;
+    private static final int MAX_FALLING_OBJECTS = 7;
 
     private Texture background;
     private EntityManager entityManager;
@@ -153,16 +155,25 @@ public class MainScreen extends Scene {
     }
     
     private void spawnRandomFallingObject() {
-        float x = random.nextFloat() * (WORLD_WIDTH - 64); // assuming 64px width max
-        float speed = Math.min(1.5f + random.nextFloat(), MAX_SPEED); // cap speed
+        // Only spawn if current number of falling objects is less than the max (7)
+        long fallingCount = entityManager.getEntities().stream()
+            .filter(e -> e instanceof Objects && ((Objects) e).isAIControlled())
+            .count();
 
-        boolean spawnVegetable = random.nextBoolean();
+        if (fallingCount >= MAX_FALLING_OBJECTS) return;
+
+        float x = random.nextFloat() * (WORLD_WIDTH - 64);
+        float speed = Math.min(1.5f + random.nextFloat(), MAX_SPEED);
+
+        int type = random.nextInt(3); // 0 = veg, 1 = icecream, 2 = protein
         Entity falling;
 
-        if (spawnVegetable) {
-            falling = new Vegetable("vegetable3.png", x, 600, speed, 0, true, batch);
+        if (type == 0) {
+            falling = new Vegetable("vegetable3.png", x, 700, speed, 0, true, batch);
+        } else if (type == 1) {
+            falling = new IceCream("icecream2.png", x, 700, speed, 0, true, batch);
         } else {
-            falling = new IceCream("icecream2.png", x, 600, speed, 0, true, batch);
+            falling = new Protein("protein.png", x, 700, speed, 0, true, batch);
         }
 
         entityManager.addEntity(falling);

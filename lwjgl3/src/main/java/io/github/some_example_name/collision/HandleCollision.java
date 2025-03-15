@@ -53,12 +53,14 @@ public class HandleCollision extends CollisionManager {
                     Entity object = (player == e1) ? e2 : e1;
                  // If valid collision between player and an object
                     if (player != null && object instanceof Objects) {
-                    	// Check if the object is a vegetable or ice cream using texture filename
-                        if (object.getTexture().toString().toLowerCase().contains("vegetable")) {
+                    	String textureName = object.getTexture().toString().toLowerCase();
+                    	
+                    	// Check if the object is a vegetable,protein or ice cream using texture filename
+                    	if (textureName.contains("vegetable") || textureName.contains("protein")) {
                             scoreManager.increaseScore();
                             mainScreen.showFloatingText("+1"); // Show green floating +1 text
                             System.out.println("Ate a vegetable! Score: " + scoreManager.getScore());
-                        } else if (object.getTexture().toString().toLowerCase().contains("icecream")) {
+                        } else if (textureName.contains("icecream")) {
                             scoreManager.decreaseScore();
                             mainScreen.showFloatingText("-1"); // Show red floating -1 text
                             System.out.println("Ate ice cream! Score: " + scoreManager.getScore());

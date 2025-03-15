@@ -3,7 +3,7 @@ package io.github.some_example_name.score;
 public class ScoreManager {
     private int score;
     private final int WIN_SCORE = 10;
-    private final int LOSE_SCORE = -3;
+    private final int LOSE_SCORE = -2;
 
     public ScoreManager() {
         this.score = 0;
