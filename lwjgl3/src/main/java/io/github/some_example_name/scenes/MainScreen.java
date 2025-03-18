@@ -132,7 +132,7 @@ public class MainScreen extends Scene {
         layout.setText(font, scoreText);
         font.draw(batch, scoreText, WORLD_WIDTH - layout.width - 20, WORLD_HEIGHT - 20);
         
-        // Draw a floating text for + or - points
+        // Draw a floating text for +1 or -1 points
         if (!floatingText.isEmpty()) {
             layout.setText(font, floatingText);
 
@@ -155,8 +155,9 @@ public class MainScreen extends Scene {
          
     }
     
+ // Spawns a new random food object if limit not reached
     private void spawnRandomFallingObject() {
-        // Only spawn if current number of falling objects is less than the max (7)
+        // Only spawn if current number of falling objects is less than the max (8)
         long fallingCount = entityManager.getEntities().stream()
             .filter(e -> e instanceof Objects && ((Objects) e).isAIControlled())
             .count();
@@ -198,7 +199,6 @@ public class MainScreen extends Scene {
             backgroundMusic = null; // Ensure it doesn't get reused
         }
     }
-
 
     @Override
     public void dispose() {

@@ -1,5 +1,9 @@
 package io.github.some_example_name.score;
-
+/**
+ * ScoreManager handles the game score logic.
+ * It tracks the current score, win/lose thresholds,
+ * and provides methods to update or reset the score.
+ */
 public class ScoreManager {
     private int score;
     private final int WIN_SCORE = 10;
@@ -8,11 +12,13 @@ public class ScoreManager {
     public ScoreManager() {
         this.score = 0;
     }
-
+    
+    // Increase score by 1 point
     public void increaseScore() {
         score++;
     }
-
+    
+    // Decrease score by 1 point
     public void decreaseScore() {
         score--;
     }

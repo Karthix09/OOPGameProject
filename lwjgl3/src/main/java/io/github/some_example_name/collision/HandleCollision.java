@@ -41,7 +41,7 @@ public class HandleCollision extends CollisionManager {
  // Detects collisions among all pairs of entities in the list
     @Override
     public void detectCollision(List<Entity> entities) {
-        List<Entity> toRemove = new ArrayList<>();
+        List<Entity> toRemove = new ArrayList<>(); // store collided objects to remove later
 
         for (Entity e1 : entities) {
             for (Entity e2 : entities) {
@@ -99,7 +99,7 @@ public class HandleCollision extends CollisionManager {
                 }
             }
         }
-        
+        // Remove collided food items after loop
         entities.removeAll(toRemove);
     }
 
