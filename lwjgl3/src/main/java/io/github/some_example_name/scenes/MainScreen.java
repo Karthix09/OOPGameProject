@@ -46,9 +46,9 @@ public class MainScreen extends Scene {
     private GlyphLayout layout;
     
     private float spawnTimer;
-    private float spawnInterval = 2.0f; // seconds
+    private float spawnInterval = 1.5f; // seconds
     private Random random;
-    private final float MAX_SPEED = 1.0f;
+    private final float MAX_SPEED = 1.5f;
     
     private String floatingText = "";
     private float floatingTextTimer = 0f;
@@ -164,7 +164,7 @@ public class MainScreen extends Scene {
         if (fallingCount >= MAX_FALLING_OBJECTS) return;
 
         float x = random.nextFloat() * (WORLD_WIDTH - 64);
-        float speed = Math.min(0.4f + random.nextFloat() * 0.6f, MAX_SPEED); // range ~0.4 to 1.0
+        float speed = Math.min(0.4f + random.nextFloat() * 1.1f, MAX_SPEED); // range ~0.4 to 1.5
 
 
         int type = random.nextInt(4); // 0 = veg, 1 = icecream, 2 = protein, 3 = carb

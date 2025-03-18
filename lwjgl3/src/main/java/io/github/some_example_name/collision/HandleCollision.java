@@ -8,6 +8,7 @@ import io.github.some_example_name.scenes.SceneManager;
 import io.github.some_example_name.scenes.SceneTransition;
 import io.github.some_example_name.score.ScoreManager;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import com.badlogic.gdx.Gdx;
@@ -40,10 +41,10 @@ public class HandleCollision extends CollisionManager {
  // Detects collisions among all pairs of entities in the list
     @Override
     public void detectCollision(List<Entity> entities) {
-        for (int i = 0; i < entities.size(); i++) {
-            for (int j = i + 1; j < entities.size(); j++) {
-                Entity e1 = entities.get(i);
-                Entity e2 = entities.get(j);
+        List<Entity> toRemove = new ArrayList<>();
+
+        for (Entity e1 : entities) {
+            for (Entity e2 : entities) {
              // Check if both are collidable and are currently colliding
                 if (e1.isCollidable() && e2.isCollidable() && checkCollision(e1, e2)) {
                     // Identify which one is the player
@@ -75,9 +76,11 @@ public class HandleCollision extends CollisionManager {
 
                         // Play sound effect
                         collisionSound.play(1.0f);
+                        
+                        toRemove.add(object);
 
                         // Reset object's position to fall from the top
-                        object.setPosY(600);
+                        object.setPosY(700);
 
                         // Check for win or lose
                         if (scoreManager.hasWon()) {
@@ -96,6 +99,8 @@ public class HandleCollision extends CollisionManager {
                 }
             }
         }
+        
+        entities.removeAll(toRemove);
     }
 
     @Override

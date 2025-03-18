@@ -37,8 +37,8 @@ public class MovementManager{
 	 	private float maxSpeed;
 	    private float acceleration = 300;
 	    private float jumpForce;
-	    private float MAX_SPEED = 2.0f; //Max Speed of 2
-	    private float MIN_SPEED = 0.6f; //Min Speed of 0.6
+	    private float MAX_SPEED = 2.5f; //Max Speed of 2
+	    private float MIN_SPEED = 0.7f; //Min Speed of 0.7
 	    private float RESET_HEIGHT = 700f; //Top of Screen
 
 	    
@@ -118,7 +118,7 @@ public class MovementManager{
 		public void handleFallMovement(MovableEntity entity, float Speed) {
 
 			if(entity.getPosY() <= 0) {
-				// Randomize speed with cap at 2
+				// Randomize speed with cap at 2.5
 				if(entity.getSpeed() <= MAX_SPEED) {
 					entity.setSpeed(entity.getSpeed() + random.nextFloat() * 0.3f);			
 				}
