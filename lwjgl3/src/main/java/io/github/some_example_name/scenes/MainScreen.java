@@ -31,7 +31,7 @@ import com.badlogic.gdx.audio.Music;
 public class MainScreen extends Scene {
     private static final float WORLD_WIDTH = 1344;
     private static final float WORLD_HEIGHT = 768;
-    private static final int MAX_FALLING_OBJECTS = 7;
+    private static final int MAX_FALLING_OBJECTS = 8;
 
     private Texture background;
     private EntityManager entityManager;
