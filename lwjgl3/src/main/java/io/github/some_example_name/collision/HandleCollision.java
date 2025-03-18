@@ -67,6 +67,10 @@ public class HandleCollision extends CollisionManager {
                                scoreManager.increaseScore();
                                mainScreen.showFloatingText("+1"); // Show green floating +1 text
                                System.out.println("Ate a protein! Score: " + scoreManager.getScore());
+                           } else if (textureName.contains("carbohydrate")) {
+                               scoreManager.increaseScore();
+                               mainScreen.showFloatingText("+1"); // Show green floating +1 text
+                               System.out.println("Ate a carbohydrate! Score: " + scoreManager.getScore());
                            }
 
                         // Play sound effect

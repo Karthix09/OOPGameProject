@@ -12,6 +12,7 @@ import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 
 import io.github.some_example_name.collision.HandleCollision;
+import io.github.some_example_name.entities.Carbohydrate;
 import io.github.some_example_name.entities.Character;
 import io.github.some_example_name.entities.Entity;
 import io.github.some_example_name.entities.EntityManager;
@@ -47,7 +48,7 @@ public class MainScreen extends Scene {
     private float spawnTimer;
     private float spawnInterval = 2.0f; // seconds
     private Random random;
-    private final float MAX_SPEED = 2.0f;
+    private final float MAX_SPEED = 0.7f;
     
     private String floatingText = "";
     private float floatingTextTimer = 0f;
@@ -163,18 +164,23 @@ public class MainScreen extends Scene {
         if (fallingCount >= MAX_FALLING_OBJECTS) return;
 
         float x = random.nextFloat() * (WORLD_WIDTH - 64);
-        float speed = Math.min(1.5f + random.nextFloat(), MAX_SPEED);
+        float speed = Math.min(0.3f + random.nextFloat() * 0.4f, MAX_SPEED); // range ~0.3 to 0.7
 
-        int type = random.nextInt(3); // 0 = veg, 1 = icecream, 2 = protein
+
+        int type = random.nextInt(4); // 0 = veg, 1 = icecream, 2 = protein, 3 = carb
         Entity falling;
 
         if (type == 0) {
             falling = new Vegetable("vegetable3.png", x, 700, speed, 0, true, batch);
         } else if (type == 1) {
             falling = new IceCream("icecream2.png", x, 700, speed, 0, true, batch);
-        } else {
+        } else if (type == 2) {
             falling = new Protein("protein.png", x, 700, speed, 0, true, batch);
+        } else {
+            falling = new Carbohydrate("carbohydrate.png", x, 700, speed, 0, true, batch);
         }
+
+        entityManager.addEntity(falling);
 
         entityManager.addEntity(falling);
     }

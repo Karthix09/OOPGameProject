@@ -37,9 +37,9 @@ public class MovementManager{
 	 	private float maxSpeed;
 	    private float acceleration = 300;
 	    private float jumpForce;
-	    private float MAX_SPEED = 5.0f; //Max Speed of 5
-	    private float MIN_SPEED = 2.0f; //Min Speed of 2
-	    private float RESET_HEIGHT = 400f; //Top of Screen
+	    private float MAX_SPEED = 2.0f; //Max Speed of 2
+	    private float MIN_SPEED = 0.6f; //Min Speed of 0.6
+	    private float RESET_HEIGHT = 700f; //Top of Screen
 
 	    
 	    private Random random = new Random();
@@ -118,12 +118,12 @@ public class MovementManager{
 		public void handleFallMovement(MovableEntity entity, float Speed) {
 
 			if(entity.getPosY() <= 0) {
-				// Randomize speed with cap at 5
+				// Randomize speed with cap at 2
 				if(entity.getSpeed() <= MAX_SPEED) {
-					entity.setSpeed(entity.getSpeed() + random.nextFloat() * 2);			
+					entity.setSpeed(entity.getSpeed() + random.nextFloat() * 0.3f);			
 				}
 				else {
-					entity.setSpeed(entity.getSpeed() - random.nextFloat() * 2);
+					entity.setSpeed(entity.getSpeed() - random.nextFloat() * 0.3f);
 				}
 							
 				// Recalculate new random X for Object
