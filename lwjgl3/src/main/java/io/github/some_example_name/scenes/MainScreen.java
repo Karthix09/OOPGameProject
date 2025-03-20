@@ -44,59 +44,59 @@ public class MainScreen extends Scene {
 
     private BitmapFont font;
     private GlyphLayout layout;
-    
+
     private float spawnTimer;
     private float spawnInterval = 1.5f; // seconds
     private Random random;
     private final float MAX_SPEED = 1.5f;
-    
+
     private String floatingText = "";
     private float floatingTextTimer = 0f;
     private final float floatingTextDuration = 1.0f;
-    
+
     public MainScreen(SceneManager sceneManager) {
         super(sceneManager); // Call constructor of the parent class
         background = new Texture("game_bg3.jpg");
         viewport = new FitViewport(WORLD_WIDTH, WORLD_HEIGHT);
         viewport.apply();
-        
+
      // Initialize Managers
         entityManager = new EntityManager();
         movementManager = new MovementManager(); // Ensure movementManager is initialized
         scoreManager = new ScoreManager();
         random = new Random();
-        
+
         if (sceneManager == null) {
             throw new IllegalStateException("SceneManager is NULL! Cannot initialize HandleCollision.");
         }
-        
+
         if (movementManager == null ) {
             throw new IllegalStateException("Managers failed to initialize");
         }
-        
+
         if (scoreManager == null) {
             throw new IllegalStateException("ScoreManager failed to initialize");
         }
-        
-        
+
+
         collisionManager = new HandleCollision(sceneManager, scoreManager, this);
-        
+
         if (collisionManager == null) {
             throw new IllegalStateException("collisionManager failed to initialize");
         }
-        
+
         ioManager = new IOManager(sceneManager);
 
         // Create Player (Plate) Entity (Movable by user)
-        player = new Character("plate5.png", 30, 0, 500, 10, 10, true, batch, false);
+        player = new Character("plate5.png", 30, 0, 500, 20, true, batch, false);
         entityManager.addEntity(player);
-        
+
      // Load and Play Background Music
         backgroundMusic = Gdx.audio.newMusic(Gdx.files.internal("backgroundmusic.wav"));
         backgroundMusic.setLooping(true);
         backgroundMusic.setVolume(0.1f); // Set volume to 10%
         backgroundMusic.play();
-        
+
      // Font for score and positive or negative points
         font = new BitmapFont();
         font.getData().setScale(3.0f); // Make score text bigger
@@ -107,13 +107,13 @@ public class MainScreen extends Scene {
     public void render(float delta) {
         viewport.update(Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), true);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-        
+
         spawnTimer += delta;
         if (spawnTimer >= spawnInterval) {
             spawnRandomFallingObject();
             spawnTimer = 0;
         }
-        
+
         if (!floatingText.isEmpty()) {
             floatingTextTimer += delta;
             if (floatingTextTimer >= floatingTextDuration) {
@@ -131,7 +131,7 @@ public class MainScreen extends Scene {
         String scoreText = "Score: " + scoreManager.getScore();
         layout.setText(font, scoreText);
         font.draw(batch, scoreText, WORLD_WIDTH - layout.width - 20, WORLD_HEIGHT - 20);
-        
+
         // Draw a floating text for +1 or -1 points
         if (!floatingText.isEmpty()) {
             layout.setText(font, floatingText);
@@ -145,16 +145,15 @@ public class MainScreen extends Scene {
             font.draw(batch, floatingText, WORLD_WIDTH / 2f - layout.width / 2f, WORLD_HEIGHT / 2f + 100);
             font.setColor(1, 1, 1, 1); // reset to white
         }
-        
+
         batch.end();
-        
+
      // Update entity movements and collisions
         movementManager.updateMovement(entityManager);
         entityManager.updateEntities();
         collisionManager.detectCollision(entityManager.getEntities());
-         
     }
-    
+
  // Spawns a new random food object if limit not reached
     private void spawnRandomFallingObject() {
         // Only spawn if current number of falling objects is less than the max (8)
@@ -185,7 +184,7 @@ public class MainScreen extends Scene {
 
         entityManager.addEntity(falling);
     }
-    
+
     // This will print a floating text to show +1 or -1 when the character collides with an object
     public void showFloatingText(String text) {
         this.floatingText = text;
@@ -210,24 +209,24 @@ public class MainScreen extends Scene {
 	@Override
 	public void show() {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void pause() {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void resume() {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void hide() {
 		// TODO Auto-generated method stub
-		
+
 	}
 }

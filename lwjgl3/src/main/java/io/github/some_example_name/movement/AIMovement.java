@@ -34,7 +34,7 @@ public class AIMovement {
             // Correctly generate a new random X position across full screen width
             float randomX = random.nextFloat() * (WORLD_WIDTH - entity.getWidth());  // Use WORLD_WIDTH from GameScreen
             entity.setPosX(randomX);
-            entity.setPosY(WORLD_HEIGHT);
+            entity.setPosY(WORLD_HEIGHT-entity.getHeight());
         }
     }
 
