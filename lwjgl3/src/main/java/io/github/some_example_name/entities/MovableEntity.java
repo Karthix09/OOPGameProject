@@ -18,27 +18,40 @@ import io.github.some_example_name.interfaces.iMovable;
 
 
 public abstract class MovableEntity extends Entity implements iMovable {
-	
+
 	//For drawing TextureObjects
 	private Texture texture;
 	private SpriteBatch batch;
 	private Sprite sprite;
-	private Vector2 position;
-	private boolean facingRight = true;
+//	private boolean facingRight = true;
 	private boolean isAIControlled; //Check if object is AI Controlled
-	
-	
-//  Constructor for Movable Texture Object  
+
+
+//  Constructor for Movable Texture Object
 	MovableEntity(String filePath, float x, float y, float speed, boolean isCollidable, SpriteBatch batch, boolean isAIControlled){
 		super(x, y, speed, isCollidable);
 		this.texture = new Texture(Gdx.files.internal(filePath));
 		this.batch = batch;
 		this.isAIControlled = isAIControlled;
-
 	}
-	
 
-	
+        //Getters
+        public Texture getTexture() {
+            return this.texture;
+        }
+        //Get Texture Width
+        public float getWidth() {
+            return this.texture.getWidth();
+        }
+        //Get Texture Height
+        public float getHeight() {
+            return this.texture.getHeight();
+        }
+
+        public boolean isAIControlled() {
+            return this.isAIControlled;
+        }
+
 		//Setters
 		public void setTexture(Texture tex) {
 			this.texture = tex;
@@ -46,40 +59,18 @@ public abstract class MovableEntity extends Entity implements iMovable {
 		public void setAIControlled(boolean isAIControlled) {
 			this.isAIControlled = isAIControlled;
 		}
-		
-		
-		//Drawing the objects 
+
+
+		//Drawing the objects
 		@Override
 		public void draw(ShapeRenderer shapeRenderer, SpriteBatch spriteBatch) {
 			batch.draw(this.texture, getPosX(), getPosY(), texture.getWidth(), texture.getHeight());
 		}
-		
-		
-		
-		//Getters 
-		public Texture getTexture() {
-			return this.texture;
-		}
-		//Get Texture Width 
-		public float getWidth() {
-	    	return this.texture.getWidth();
-	    }
-	    //Get Texture Height
-	    public float getHeight() {
-	    	return this.texture.getHeight();
-	    }
-	    
-		public boolean isAIControlled() {
-			return this.isAIControlled;
-		}
-		
-		
-	
-		
+
 		@Override
 		public abstract void movement();
-		
-		
+
+
 		//Basic Movement Methods For Movable Entities (PolyMorphism)
 		public abstract void moveLeft();
 		public abstract void moveRight();
@@ -87,8 +78,5 @@ public abstract class MovableEntity extends Entity implements iMovable {
 
 
 		public abstract void setPosition(float clampedX, float clampedY);
-
-
-   
 
 }

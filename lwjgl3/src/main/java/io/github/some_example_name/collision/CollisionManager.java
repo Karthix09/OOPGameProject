@@ -9,6 +9,10 @@ public abstract class CollisionManager {
 
     public abstract void detectCollision(List<Entity> entities);
 
+
+
+
+
     // Force subclasses to implement cleanup logic
     public abstract void dispose();
 }

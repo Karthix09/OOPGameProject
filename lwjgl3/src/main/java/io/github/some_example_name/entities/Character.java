@@ -16,39 +16,31 @@ import io.github.some_example_name.movement.MovementManager;
 
 
 public class Character extends MovableEntity{
-	
-	private Texture texture;
-  private Sprite sprite;
 
-  private float acceleration;
-  private float jumpForce = 20f; // Adjusted jump force
-
-  private Vector2 position;
+  private float jumpForce; // Adjusted jump force
 
   private boolean isJumping = false;
-  private float gravity = -0.6f; // Gravity pull
-  private float verticalSpeed = 0f;
-  
-  IOManager iomanager;
-  MovementManager mm;
-  
+  private float gravity; // Gravity pull
+  private float verticalSpeed;
 
-  
-//Overloaded Constructor for Player with Acceleration 
-  public Character(String filePath, float x, float y, float speed, float acceleration, float jumpforce, boolean isCollidable, SpriteBatch batch, boolean isAIControlled) {
+  MovementManager mm;
+
+
+
+//Overloaded Constructor for Player with Acceleration
+  public Character(String filePath, float x, float y, float speed, float jumpforce, boolean isCollidable, SpriteBatch batch, boolean isAIControlled) {
       super(filePath, x, y, speed, isCollidable, batch, isAIControlled);
-      this.acceleration = acceleration;
       this.jumpForce = jumpforce;
   }
-	
+
 
 	// Getter and Setter for acceleration
-	public float getAcceleration() {
-	    return acceleration;
+	public float getGravity() {
+	    return gravity;
 	}
 
-	public void setAcceleration(float acceleration) {
-	    this.acceleration = acceleration;
+	public void setGravity(float gravity) {
+	    this.gravity = gravity;
 	}
 
 	// Getter and Setter for jumpForce
@@ -59,94 +51,80 @@ public class Character extends MovableEntity{
 	public void setJumpForce(float jumpForce) {
 	    this.jumpForce = jumpForce;
 	}
-	
 
-	public boolean isGrounded() { //Checks if object is on the ground
-		if (this.getPosY() == 0) { //Characters should only be movable while its on the ground
-			return true;
-		}
-		else {
-			return false; 
-		}
-	}
-	    
-	  
-	
-	// Player will not be AI Controlled for now 
+    public boolean isJumping() {
+        return isJumping;
+    }
+
+    public void setJumping(boolean jumping) {
+        this.isJumping = jumping;
+    }
+    // Getter for verticalSpeed
+    public float getVerticalSpeed() {
+        return verticalSpeed;
+    }
+
+    // Setter for verticalSpeed
+    public void setVerticalSpeed(float verticalSpeed) {
+        this.verticalSpeed = verticalSpeed;
+    }
+
+	    // Player will not be AI Controlled for now
 	    @Override
 	    public void movement() {
-//	    	
 	    	mm = new MovementManager();
-	    	mm.processCharInput(this);         // Input will be processed by MovementManager
-
+	    	mm.processCharInput(this); // Input will be processed by MovementManager
 	   }
-	    
-	    
-	   // Characters will have its own implementations of movements 
-	    
+
+
+	   // Characters will have its own implementations of movements
 	    @Override
 	    public void moveLeft() {
 	    	this.setPosX((this.getPosX() - (this.getSpeed() * Gdx.graphics.getDeltaTime())));
 	    	System.out.println("Left");
 
-
 	    }
-	    
+
 	    @Override
 	    public void moveRight() {
 	    	this.setPosX((this.getPosX() + (this.getSpeed() * Gdx.graphics.getDeltaTime())));
 	    	System.out.println("Right");
 
 	    }
-	    
+
+        //Method is called when spacebar is pressed
 	    @Override
 	    public void jump() {
-	        if (!isJumping) { 
-	            isJumping = true;
-	            verticalSpeed = jumpForce; 
+	        if (!isJumping()) {
+	            this.verticalSpeed = this.jumpForce;
+                setJumping(true);
 	            System.out.println("Jumping!");
 	        }
 	    }
-	   
-	    public void onCollision() {
-	    	
-	    }
 
+        // Runs in Render
 	    @Override
 	    public void update() {
-	        if (isJumping) {
-	            this.setPosY(getPosY() + verticalSpeed);  
-	            verticalSpeed += gravity;  
-	            
-	            if (getPosY() <= 0) {  
-	                setPosY(0);  
-	                isJumping = false;
-	                verticalSpeed = 0;
-	                System.out.println("Landed!");
-	            }
-	        }
+        //Character gravity will take in (isJumping and verticalSpeed
+            this.setPosY(this.getPosY() + this.getVerticalSpeed());
+            mm.applyCharGravity(this, this.isJumping());
 	    }
+
 		@Override
 		public void setPosition(float clampedX, float clampedY) {
-
 			this.setPosX(clampedX);
 			this.setPosY(clampedY);
-
 		}
-
 
 		@Override
 		public boolean hasCollided() {
-			
 			return false;
 		}
-
-
+//
 		@Override
 		public void setCollided(boolean collided) {
-			
-			
+
 		}
-		
-	    
+
+
 }

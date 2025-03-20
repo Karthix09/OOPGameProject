@@ -26,79 +26,67 @@ import io.github.some_example_name.entities.Objects;
 import io.github.some_example_name.inputoutput.IOManager;
 import io.github.some_example_name.inputoutput.KeyboardInput;
 
-//Movement manager class should be able to call movement methods and 
-// 1. Calls all Movement methods 
-// 2. Different movement mechanics 
+//Movement manager class should be able to call movement methods and
+// 1. Calls all Movement methods
+// 2. Different movement mechanics
 
 public class MovementManager{
     private static final float WORLD_WIDTH = 1344;
     private static final float WORLD_HEIGHT = 768;
-	
+
 	 	private float maxSpeed;
 	    private float acceleration = 300;
 	    private float jumpForce;
-	    private float MAX_SPEED = 5.0f; //Max Speed of 5
-	    private float MIN_SPEED = 2.0f; //Min Speed of 2
-	    private float RESET_HEIGHT = 400f; //Top of Screen
 
-	    
-	    private Random random = new Random();
-	    
+
 	    KeyboardInput keyboardInput = new KeyboardInput();
-	    
-	    
-	    
-	    //Overloaded Constructor to call from GameMaster for Player Movements 
+        ManualMovement manualMovement = new ManualMovement(); // instantiating object for Manual Movement
+        AIMovement aiMovement = new AIMovement();
+
+
+
+	    //Overloaded Constructor to call from GameMaster for Player Movements
 	    public MovementManager(float maxSpeed, float acceleration, float jumpForce) {
 	        this.maxSpeed = maxSpeed;
 	        this.acceleration = acceleration;
 	        this.jumpForce = jumpForce;
 	    }
-	    
+
 	    //Default Constructor
 	    public MovementManager() {
 	    }
-	    
-	    
-	  //Processes the input and calls movement for Objects
-	    public void processObjInput(Objects object) 
-	    { 
-	     if (keyboardInput.isMovementKeyPressed()) //Change to input from input output manager 
-	     {
-	      if(keyboardInput.getLastPressedKeyName().equals("A")) {
-	       object.moveLeft(); 
-	      }
-	      if (keyboardInput.getLastPressedKeyName().equals("D")) {
-	       object.moveRight();
-	      }
-	      if (keyboardInput.getLastPressedKeyName().equals("Space")){ 
-	       object.jump();
-	      }
-	     }     
-	     
-	     clampPlayerPositionToScreen(object);
+
+      // call object movement for manual movement or AI Movement
+	    public void processObjInput(Objects object)
+	    {
+            if(object.isAIControlled() || object.getPosY()>0) //Check if object is AIcontrolled or above ground level
+            {
+                  //Calls AI Movement
+                  object.setPosY(object.getPosY() - object.getSpeed());
+                  aiMovement.handleDropMechanic(object, object.getSpeed());
+//                  clampPositionToScreen(object);
+            }
+            else{
+                //Handling ManualMovement for objects - calls process input method
+                manualMovement.moveObj(object); // Input will be processed Movement Manager
+                clampPositionToScreen(object);
+            }
 	    }
 
-	       //Processes the input and calls movement for Characters 
-	       public void processCharInput(Character c) { 
-	           
-	           if (keyboardInput.isMovementKeyPressed()) 
-	           {
-	            if (keyboardInput.getLastPressedKeyName().matches("Left")) {
-	             c.moveLeft();
-	            }
-	            if (keyboardInput.getLastPressedKeyName().matches("Right")) {
-	             c.moveRight();
-	            }
-	            if (keyboardInput.getLastPressedKeyName().matches("Space")) {
-	             c.jump();
-	            }
-	           }
-	           clampPlayerPositionToScreen(c);
+	       //Processes the input and calls movement for Characters
+	       public void processCharInput(Character character) {
+               manualMovement.moveChar(character);
+	           clampPositionToScreen(character);
 	       }
-	    
-	    
-	    private void clampPlayerPositionToScreen(MovableEntity entity) {
+            //Apply Character gravity to ground player when jumping
+            public void applyCharGravity(Character character, boolean isJumping) {
+                if(isJumping){
+                    aiMovement.gravity(character);
+                }
+
+            }
+
+	    private void clampPositionToScreen(MovableEntity entity) {
 	        float playerWidth = entity.getWidth();
 	        float playerHeight = entity.getHeight();
 
@@ -112,45 +100,16 @@ public class MovementManager{
 	        entity.setPosition(clampedX, clampedY); // Set the player's position within screen boundaries
 	    }
 
-	    
 
-		//Handles the movement of objects falling from the sky 
-		public void handleFallMovement(MovableEntity entity, float Speed) {
-
-			if(entity.getPosY() <= 0) {
-				// Randomize speed with cap at 5
-				if(entity.getSpeed() <= MAX_SPEED) {
-					entity.setSpeed(entity.getSpeed() + random.nextFloat() * 2);			
-				}
-				else {
-					entity.setSpeed(entity.getSpeed() - random.nextFloat() * 2);
-				}
-							
-				// Recalculate new random X for Object
-				// Correctly generate a new random X position across full screen width
-		        float randomX = random.nextFloat() * (1344 - entity.getWidth());  // Use WORLD_WIDTH from GameScreen
-		        entity.setPosX(randomX);
-		        entity.setPosY(RESET_HEIGHT);
-				}
-		}
-
-	    
-	    
-	 	// Updates all the movable entities 
+	 	// Updates all the movable entities
 	    public void updateMovement(EntityManager entityManager) {
-	        List<Entity> entities = entityManager.getEntities(); //call getEntities() to get all entities in array list  
+	        List<Entity> entities = entityManager.getEntities(); //call getEntities() to get all entities in array list
 
 	        for (Entity entity : entities) {
-	            if (entity instanceof MovableEntity) { //check if entity is an instance of the MovableEntity class 
+	            if (entity instanceof MovableEntity) { //check if entity is an instance of the MovableEntity class
 	                MovableEntity movable = (MovableEntity) entity;
 	                movable.movement(); // call movement method in Movable Entity
-
 	            }
 	        }
 	    }
-	   
-
-
-
-
 }

@@ -7,14 +7,14 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 
 public abstract class Entity{
-	
+
 	private float posX; // Position X of Entity
 	private float posY;//Position Y of Entity
 	private boolean isCollidable; //To check if object instantiated is a Collidable.
-	private float speed;//Declare Speed for Movable Entity 
+	private float speed;//Declare Speed for Movable Entity
 	protected Texture texture;
 
-	
+
 	//Constructor for IMMovable
 	public Entity(float x, float y, boolean isCollidable){
 		this.posX = x;
@@ -36,10 +36,8 @@ public abstract class Entity{
 			this.posY = 0;
 			this.isCollidable = false;
 		}
-	
-		//Getters 
 
-
+		//Getters
 		public float getPosX() {
 			return this.posX;
 		}
@@ -53,30 +51,12 @@ public abstract class Entity{
 			return this.speed;
 		}
 
-	
+
 		//abstract update and draw methods for subclasses
 		public abstract void update();
 		public abstract void draw(ShapeRenderer shapeRenderer, SpriteBatch spriteBatch);
-		
-		
-		// Entity Movement Methods
-	    public void moveLeft() {
-	    	this.posX = this.posX - this.speed * Gdx.graphics.getDeltaTime();
-	    }
 
-	    public void moveRight() {
-	    	this.posX = this.posX + this.speed * Gdx.graphics.getDeltaTime();
-	    }
 
-	    public void moveDown() {
-	    	this.posY = this.posY - this.speed * Gdx.graphics.getDeltaTime();
-	    }
-
-	    public void moveUp() {
-	    	this.posY = this.posY + this.speed * Gdx.graphics.getDeltaTime();
-	    }
-
-	    
 		public void setSpeed(float speed) {
 			this.speed = speed;
 		}
