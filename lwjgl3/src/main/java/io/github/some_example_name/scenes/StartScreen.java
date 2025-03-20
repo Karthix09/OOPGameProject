@@ -26,7 +26,7 @@ public class StartScreen extends Scene {
     public StartScreen(SceneManager sceneManager) {
         super(sceneManager);
         batch = new SpriteBatch();
-        background = new Texture("main_menu_bg.png");
+        background = new Texture("main_menu_bg2.jpg");
         font = new BitmapFont();
         viewport = new FitViewport(WORLD_WIDTH, WORLD_HEIGHT);
         viewport.apply();
@@ -45,7 +45,8 @@ public class StartScreen extends Scene {
 
         font.setColor(Color.WHITE);
         font.getData().setScale(2);
-        font.draw(batch, "Click ANYWHERE on the screen to Start program!", WORLD_WIDTH / 2 - 300, WORLD_HEIGHT / 2);
+        font.draw(batch, "Welcome to the Healthy Eating Game!", WORLD_WIDTH / 2 - 300, WORLD_HEIGHT - 650);
+        font.draw(batch, "Click ANYWHERE on the screen to Start Game!", WORLD_WIDTH / 2 - 300, WORLD_HEIGHT - 700);
 
         batch.end();
 

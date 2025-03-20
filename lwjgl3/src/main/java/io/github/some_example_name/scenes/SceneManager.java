@@ -1,10 +1,7 @@
 package io.github.some_example_name.scenes;
 
 import com.badlogic.gdx.Game;
-
-
 import com.badlogic.gdx.Screen;
-
 import java.util.HashMap;
 import java.util.Map;
 
@@ -56,6 +53,13 @@ public class SceneManager {
             System.out.println("Error: Game instance is null");
         }
     }
+    
+    public void switchToEndScreen(boolean isWin) {
+        EndScreen endScreen = new EndScreen(this, isWin);
+        scenes.put("EndScreen", endScreen);
+        game.setScreen(endScreen);
+    }
+
  // Fix: Restart the game by recreating GameScreen
     public void restartGame() {
         System.out.println("Restarting game...");

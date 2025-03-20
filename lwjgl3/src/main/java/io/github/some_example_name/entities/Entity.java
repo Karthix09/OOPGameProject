@@ -50,6 +50,9 @@ public abstract class Entity{
 		public float getSpeed() {
 			return this.speed;
 		}
+		public Texture getTexture() {
+			return this.texture;
+		}
 
 
 		//abstract update and draw methods for subclasses

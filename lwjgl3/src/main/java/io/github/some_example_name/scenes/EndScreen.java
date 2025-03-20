@@ -10,8 +10,6 @@ import com.badlogic.gdx.utils.viewport.FitViewport;
 
 import io.github.some_example_name.inputoutput.IOManager;
 
-
-
 public class EndScreen extends Scene {
     private static final float WORLD_WIDTH = 1344;
     private static final float WORLD_HEIGHT = 768;
@@ -19,15 +17,19 @@ public class EndScreen extends Scene {
     private Texture background;
     private BitmapFont font;
     private IOManager iomanager;
-
+    private boolean isWin;
+    
     public EndScreen(SceneManager sceneManager) {
-        super(sceneManager); // Call constructor of the parent class
-        background = new Texture("end_screen_bg.png");
+        this(sceneManager, false); // default to lose screen
+    }
+    
+    public EndScreen(SceneManager sceneManager, boolean isWin) {
+        super(sceneManager);
+        background = new Texture("healthyplate.jpg");
         font = new BitmapFont();
         viewport = new FitViewport(WORLD_WIDTH, WORLD_HEIGHT);
         viewport.apply();
-        
-     // Fix: Initialize IOManager
+        this.isWin = isWin;
         this.iomanager = new IOManager(sceneManager);
     }
 
@@ -42,10 +44,16 @@ public class EndScreen extends Scene {
 
         font.setColor(Color.WHITE);
         font.getData().setScale(2);
-        font.draw(batch, "Game Over!", WORLD_WIDTH / 2 - 60, WORLD_HEIGHT / 2 + 50);
-        font.draw(batch, "Press ENTER to Restart", WORLD_WIDTH / 2 - 100, WORLD_HEIGHT / 2);
-        font.draw(batch, "Press ESC to Exit", WORLD_WIDTH / 2 - 80, WORLD_HEIGHT / 2 - 30);
-
+        
+        // Align text to the left
+        float textX = 50; // Adjust this for exact alignment
+        float textY = WORLD_HEIGHT - 100;
+        
+        font.draw(batch, "Thank you for playing!", textX, textY);
+        font.draw(batch, isWin ? "You Win!" : "Game Over!", textX, textY - 50);
+        font.draw(batch, "Press ENTER to Restart", textX, textY - 100);
+        font.draw(batch, "Press ESC to Exit", textX, textY - 150);
+        
         batch.end();
 
         if (Gdx.input.isKeyJustPressed(Input.Keys.ENTER)) {
