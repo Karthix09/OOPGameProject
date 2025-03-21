@@ -9,6 +9,7 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 
 import io.github.some_example_name.inputoutput.IOManager;
+import io.github.some_example_name.score.ScoreManager;
 
 public class EndScreen extends Scene {
     private static final float WORLD_WIDTH = 1344;
@@ -18,12 +19,13 @@ public class EndScreen extends Scene {
     private BitmapFont font;
     private IOManager iomanager;
     private boolean isWin;
+    private ScoreManager scoreManager;
     
     public EndScreen(SceneManager sceneManager) {
-        this(sceneManager, false); // default to lose screen
+        this(sceneManager, false, null); // default to lose screen
     }
     
-    public EndScreen(SceneManager sceneManager, boolean isWin) {
+    public EndScreen(SceneManager sceneManager, boolean isWin, ScoreManager scoreManager) {
         super(sceneManager);
         background = new Texture("healthyplate.jpg");
         font = new BitmapFont();
@@ -31,6 +33,7 @@ public class EndScreen extends Scene {
         viewport.apply();
         this.isWin = isWin;
         this.iomanager = new IOManager(sceneManager);
+        this.scoreManager = scoreManager;
     }
 
     @Override
@@ -53,6 +56,14 @@ public class EndScreen extends Scene {
         font.draw(batch, isWin ? "You Win!" : "Game Over!", textX, textY - 50);
         font.draw(batch, "Press ENTER to Restart", textX, textY - 100);
         font.draw(batch, "Press ESC to Exit", textX, textY - 150);
+        
+        if (scoreManager != null) {
+            font.draw(batch, "You collected:", textX, textY - 250);
+            font.draw(batch, "- " + scoreManager.getProteinCount() + " Protein", textX + 30, textY - 300);
+            font.draw(batch, "- " + scoreManager.getVegetableCount() + " Vegetable", textX + 30, textY - 340);
+            font.draw(batch, "- " + scoreManager.getCarbohydrateCount() + " Carbohydrate", textX + 30, textY - 380);
+            font.draw(batch, "- " + scoreManager.getIceCreamCount() + " Ice Cream", textX + 30, textY - 420);
+        }
         
         batch.end();
 

@@ -2,6 +2,9 @@ package io.github.some_example_name.scenes;
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Screen;
+
+import io.github.some_example_name.score.ScoreManager;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -54,8 +57,9 @@ public class SceneManager {
         }
     }
     
-    public void switchToEndScreen(boolean isWin) {
-        EndScreen endScreen = new EndScreen(this, isWin);
+    // New method to pass score manager into the end screen with scoreManager
+    public void switchToEndScreen(boolean isWin, ScoreManager scoreManager) {
+        EndScreen endScreen = new EndScreen(this, isWin, scoreManager);
         scenes.put("EndScreen", endScreen);
         game.setScreen(endScreen);
     }

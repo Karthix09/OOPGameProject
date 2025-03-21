@@ -58,18 +58,22 @@ public class HandleCollision extends CollisionManager {
                     	// Check if the object is a vegetable,protein or ice cream using texture filename
                         if (textureName.contains("vegetable")) {
                                scoreManager.increaseScore();
+                               scoreManager.addVegetable();
                                mainScreen.showFloatingText("+1"); // Show green floating +1 text
                                System.out.println("Ate a vegetable! Score: " + scoreManager.getScore());
                            } else if (textureName.contains("icecream")) {
                                scoreManager.decreaseScore();
+                               scoreManager.addIceCream();
                                mainScreen.showFloatingText("-1"); // Show red floating -1 text
                                System.out.println("Ate ice cream! Score: " + scoreManager.getScore());
                            } else if (textureName.contains("protein")) {
                                scoreManager.increaseScore();
+                               scoreManager.addProtein();
                                mainScreen.showFloatingText("+1"); // Show green floating +1 text
                                System.out.println("Ate a protein! Score: " + scoreManager.getScore());
                            } else if (textureName.contains("carbohydrate")) {
                                scoreManager.increaseScore();
+                               scoreManager.addCarbohydrate();
                                mainScreen.showFloatingText("+1"); // Show green floating +1 text
                                System.out.println("Ate a carbohydrate! Score: " + scoreManager.getScore());
                            }
@@ -85,11 +89,11 @@ public class HandleCollision extends CollisionManager {
                         // Check for win or lose
                         if (scoreManager.hasWon()) {
                             System.out.println("You Win!");
-                            sceneManager.switchToEndScreen(true);
+                            sceneManager.switchToEndScreen(true, scoreManager);
                             return;
                         } else if (scoreManager.hasLost()) {
                             System.out.println("Game Over - You Lost!");
-                            sceneManager.switchToEndScreen(false);
+                            sceneManager.switchToEndScreen(false, scoreManager);
                             return;
                         }
                     }

@@ -145,6 +145,14 @@ public class MainScreen extends Scene {
             font.draw(batch, floatingText, WORLD_WIDTH / 2f - layout.width / 2f, WORLD_HEIGHT / 2f + 100);
             font.setColor(1, 1, 1, 1); // reset to white
         }
+        
+        // Game instructions text
+        String helpText = "Collect healthy foods and avoid the ice cream!";
+        layout.setText(font, helpText);
+        font.setColor(0, 0, 0, 1); // shadow
+        font.draw(batch, helpText, WORLD_WIDTH / 2f - layout.width / 2f + 2, WORLD_HEIGHT - 30 - 2);
+        font.setColor(1, 1, 1, 1);
+        font.draw(batch, helpText, WORLD_WIDTH / 2f - layout.width / 2f, WORLD_HEIGHT - 30);
 
         batch.end();
 
@@ -164,7 +172,7 @@ public class MainScreen extends Scene {
         if (fallingCount >= MAX_FALLING_OBJECTS) return;
 
         float x = random.nextFloat() * (WORLD_WIDTH - 64);
-        float speed = Math.min(0.4f + random.nextFloat() * 1.1f, MAX_SPEED); // range ~0.4 to 1.5
+        float speed = Math.min(0.6f + random.nextFloat() * 1.1f, MAX_SPEED); // range ~0.6 to 1.5
 
 
         int type = random.nextInt(4); // 0 = veg, 1 = icecream, 2 = protein, 3 = carb
